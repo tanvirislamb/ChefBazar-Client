@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router";
 
 export default function Navbar() {
     return (
-        <nav className="flex justify-between items-center px-10 py-3 mt-3 mx-4 rounded-xl shadow border border-gray-200">
+        <nav className="flex justify-between items-center px-10 py-3 rounded-b-xl shadow border-b border-gray-200 sticky top-0 z-10 bg-white">
             <Link to='/'
                 className="flex items-center gap-1">
                 <PiChefHatBold className="text-3xl text-orange-500" />

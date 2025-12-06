@@ -1,0 +1,115 @@
+import { useState } from "react";
+
+export default function Register() {
+    const [password, setPassword] = useState("");
+    const [confirm, setConfirm] = useState("");
+    const [error, setError] = useState("");
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (password !== confirm) {
+            setError("Passwords do not match!");
+            return;
+        }
+
+        setError("");
+        alert("Form submitted successfully!");
+    };
+
+    return (
+        <div className="min-h-screen flex items-center justify-center bg-gray-50 px-6">
+            <div className="w-full max-w-md bg-white shadow-lg rounded-xl p-8">
+
+                <h2 className="text-3xl font-bold text-center mb-6">
+                    Create an <span className="text-orange-500">Account</span>
+                </h2>
+
+                <form onSubmit={handleSubmit} className="space-y-4">
+
+                    {/* Name */}
+                    <div>
+                        <label className="text-gray-700 font-medium">Name</label>
+                        <input
+                            type="text"
+                            className="w-full mt-1 px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-orange-500"
+                            required
+                        />
+                    </div>
+
+                    {/* Email */}
+                    <div>
+                        <label className="text-gray-700 font-medium">Email</label>
+                        <input
+                            type="email"
+                            className="w-full mt-1 px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-orange-500"
+                            required
+                        />
+                    </div>
+
+                    {/* Profile Image */}
+                    <div>
+                        <label className="text-gray-700 font-medium">
+                            Profile Image (direct link)
+                        </label>
+                        <input
+                            type="text"
+                            className="w-full mt-1 px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-orange-500"
+                            placeholder="https://example.com/me.png"
+                            required
+                        />
+                    </div>
+
+                    {/* Address */}
+                    <div>
+                        <label className="text-gray-700 font-medium">Address</label>
+                        <input
+                            type="text"
+                            className="w-full mt-1 px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-orange-500"
+                            required
+                        />
+                    </div>
+
+                    {/* Password */}
+                    <div>
+                        <label className="text-gray-700 font-medium">Password</label>
+                        <input
+                            type="password"
+                            className="w-full mt-1 px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-orange-500"
+                            required
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
+
+                    {/* Confirm Password */}
+                    <div>
+                        <label className="text-gray-700 font-medium">Confirm Password</label>
+                        <input
+                            type="password"
+                            className={`w-full mt-1 px-4 py-2 border rounded-lg outline-none focus:ring-2 ${error ? "border-red-500 focus:ring-red-500" : "focus:ring-orange-500"
+                                }`}
+                            required
+                            value={confirm}
+                            onChange={(e) => setConfirm(e.target.value)}
+                        />
+                    </div>
+
+                    {/* Error Message */}
+                    {error && (
+                        <p className="text-red-500 text-sm font-medium -mt-2">{error}</p>
+                    )}
+
+                    {/* Submit Button */}
+                    <button
+                        type="submit"
+                        className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-lg transition"
+                    >
+                        Register
+                    </button>
+
+                </form>
+            </div>
+        </div>
+    );
+}

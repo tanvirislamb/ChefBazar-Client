@@ -1,0 +1,78 @@
+import { useState } from "react";
+
+export default function Login() {
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+
+        if (!password.trim()) {
+            setError("Password cannot be empty!");
+            return;
+        }
+
+        setError("");
+        alert("Login Successful!");
+    };
+
+    return (
+        <div className="min-h-screen flex items-center justify-center bg-gray-50 px-6">
+            <div className="w-full max-w-md bg-white shadow-lg rounded-xl p-8">
+
+                <h2 className="text-3xl font-bold text-center mb-6">
+                    Welcome <span className="text-orange-500">Back</span>
+                </h2>
+
+                <form onSubmit={handleLogin} className="space-y-5">
+
+                    {/* Email */}
+                    <div>
+                        <label className="text-gray-700 font-medium">Email</label>
+                        <input
+                            type="email"
+                            className="w-full mt-1 px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-orange-500"
+                            required
+                        />
+                    </div>
+
+                    {/* Password */}
+                    <div>
+                        <label className="text-gray-700 font-medium">Password</label>
+                        <input
+                            type="password"
+                            value={password}
+                            className={`w-full mt-1 px-4 py-2 border rounded-lg outline-none focus:ring-2 ${error ? "border-red-500 focus:ring-red-500" : "focus:ring-orange-500"
+                                }`}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+
+                    {/* Error */}
+                    {error && <p className="text-red-500 text-sm font-medium -mt-2">{error}</p>}
+
+                    {/* Login button */}
+                    <button
+                        type="submit"
+                        className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-lg transition"
+                    >
+                        Login
+                    </button>
+
+                </form>
+
+                {/* Extra Links */}
+                <div className="mt-5 text-center text-sm">
+                    <p className="text-gray-600">
+                        Don't have an account?
+                        <a href="/register" className="text-orange-500 font-semibold ml-1 hover:underline">
+                            Register
+                        </a>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    );
+}

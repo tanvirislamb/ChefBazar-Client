@@ -1,7 +1,12 @@
-import { useState } from "react";
-import { Link } from "react-router";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router";
+import { AuthContext } from "../Provider/AuthProvider";
 
 export default function Login() {
+
+    const { logIn } = useContext(AuthContext)
+    const navigate = useNavigate()
+
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
@@ -14,7 +19,13 @@ export default function Login() {
         }
 
         setError("");
-        alert("Login Successful!");
+        const form = e.target
+        const email = form.email.value
+
+        logIn(email, password)
+            .then(() =>
+                navigate('/')
+            )
     };
 
     return (
@@ -32,6 +43,7 @@ export default function Login() {
                         <label className="text-gray-700 font-medium">Email</label>
                         <input
                             type="email"
+                            name="email"
                             className="w-full mt-1 px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-orange-500"
                             required
                         />

@@ -1,7 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router";
+import useAxios from "../Hooks/AxiosHooks";
+import { AuthContext } from "../Provider/AuthProvider";
+
 
 export default function Register() {
+
+    const { registerFuction, update, setUser } = useContext(AuthContext)
+    const axios = useAxios()
+
     const [password, setPassword] = useState("");
     const [confirm, setConfirm] = useState("");
     const [error, setError] = useState("");
@@ -13,9 +20,35 @@ export default function Register() {
             setError("Passwords do not match!");
             return;
         }
-
         setError("");
-        alert("Form submitted successfully!");
+        const form = e.target
+        const name = form.name.value
+        const email = form.email.value
+        const image = form.image.value
+        const address = form.address.value
+
+
+        registerFuction(email, password)
+            .then(userData => {
+                const user = userData.user
+                const newUser = {
+                    userId: user.uid,
+                    name: name,
+                    email: email,
+                    photoURL: image,
+                    address: address,
+                    status: "active"
+                }
+                update({
+                    displayName: name, photoURL: image
+                })
+                    .then(() => {
+                        setUser({ ...user, displayName: name, photoURL: image })
+                    })
+                axios.post('/alluser', newUser)
+            })
+
+
     };
 
     return (
@@ -33,6 +66,7 @@ export default function Register() {
                         <label className="text-gray-700 font-medium">Name</label>
                         <input
                             type="text"
+                            name="name"
                             className="w-full mt-1 px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-orange-500"
                             required
                         />
@@ -43,6 +77,7 @@ export default function Register() {
                         <label className="text-gray-700 font-medium">Email</label>
                         <input
                             type="email"
+                            name="email"
                             className="w-full mt-1 px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-orange-500"
                             required
                         />
@@ -55,6 +90,7 @@ export default function Register() {
                         </label>
                         <input
                             type="text"
+                            name="image"
                             className="w-full mt-1 px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-orange-500"
                             placeholder="https://example.com/me.png"
                             required
@@ -66,6 +102,7 @@ export default function Register() {
                         <label className="text-gray-700 font-medium">Address</label>
                         <input
                             type="text"
+                            name="address"
                             className="w-full mt-1 px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-orange-500"
                             required
                         />

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router";
 
 export default function Register() {
     const [password, setPassword] = useState("");
@@ -109,6 +110,16 @@ export default function Register() {
                     </button>
 
                 </form>
+                <div className="mt-5 text-center text-sm">
+                    <p className="text-gray-600">
+                        Already have an account?
+                        <Link
+                            to='/login'
+                            className="text-orange-500 font-semibold ml-1 hover:underline">
+                            Login
+                        </Link>
+                    </p>
+                </div>
             </div>
         </div>
     );

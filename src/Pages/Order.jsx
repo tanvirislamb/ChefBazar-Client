@@ -34,13 +34,17 @@ export default function Order() {
 
         if (result.isConfirmed) {
             const orderData = {
+                userId: user.uid,
                 foodName: meal.foodName,
                 price: meal.price,
                 quantity,
                 chefId: meal.chefId,
+                chefName: meal.chefName,
                 userEmail: user.email,
+                deliveryTime: meal.estimatedDeliveryTime,
                 userAddress,
                 orderStatus: "pending",
+                paymentStatus: "pending",
                 orderTime: new Date().toISOString()
             };
 

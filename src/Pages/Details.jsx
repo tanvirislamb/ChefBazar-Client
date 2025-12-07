@@ -4,7 +4,7 @@ import useAxios from "../Hooks/AxiosHooks"
 import Spinner from "../Loader/Spinner"
 import { FaStar } from "react-icons/fa"
 import { AuthContext } from "../Provider/AuthProvider"
-import rating from "daisyui/components/rating"
+// import rating from "daisyui/components/rating"
 import { timeAgo } from "../Components/TimeAgo"
 import Swal from "sweetalert2"
 
@@ -37,6 +37,8 @@ export default function Details() {
         const comment = form.comment.value
         const newReview = {
             foodId: id,
+            foodName: data.foodName,
+            userId: user.uid,
             userName: user.displayName,
             photoURL: user.photoURL,
             comment: comment,

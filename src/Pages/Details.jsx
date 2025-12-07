@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from "react"
-import { useParams } from "react-router"
+import { Link, useParams } from "react-router"
 import useAxios from "../Hooks/AxiosHooks"
 import Spinner from "../Loader/Spinner"
 import { FaStar } from "react-icons/fa"
 import { AuthContext } from "../Provider/AuthProvider"
 import rating from "daisyui/components/rating"
 import { timeAgo } from "../Components/TimeAgo"
+import Swal from "sweetalert2"
 
 export default function Details() {
     const { id } = useParams()
@@ -44,8 +45,45 @@ export default function Details() {
         }
         axios.post('/review', newReview)
         setReviews((prev) => [...prev, newReview])
+        Swal.fire({
+            title: "Review submitted successfully!",
+            icon: "success",
+            draggable: true,
+            confirmButtonColor: '#f97316'
+        });
         form.reset()
     }
+
+    const handleFavourite = () => {
+        const favourite = {
+            foodId: id,
+            userEmail: user.email,
+            userId: user.uid,
+            userName: user.displayName,
+            chefId: data.chedId,
+            chefNmae: data.chefName,
+            date: new Date().toISOString()
+
+        }
+        axios.post('/meals/favourite', favourite)
+            .then(() => {
+                Swal.fire({
+                    title: "Added to Favourite successfully!",
+                    icon: "success",
+                    draggable: true,
+                    confirmButtonColor: '#f97316'
+                });
+            })
+            .catch((error) => {
+                Swal.fire({
+                    title: "This meal already exist in you Favourite items",
+                    icon: "warning",
+                    draggable: true,
+                    confirmButtonColor: '#f97316'
+                });
+            })
+    }
+
     return (
         <div>
             {
@@ -68,6 +106,21 @@ export default function Details() {
                             <p className="mt-2 font-medium flex items-center gap-1">
                                 <FaStar className="text-orange-500" /> {data.rating} / 5
                             </p>
+                            <div className="flex flex-col sm:flex-row gap-4 mt-4">
+                                <Link to="/order"
+                                    state={{ meal: data }}
+                                    className="flex-1 py-2 rounded-2xl bg-orange-500 text-white text-center font-bold hover:bg-orange-600 transition"
+                                >
+                                    Order Now
+                                </Link>
+
+                                <button
+                                    className="flex-1 py-2 rounded-2xl border-2 border-orange-500 text-orange-500 font-bold hover:bg-orange-50 transition"
+                                    onClick={handleFavourite}
+                                >
+                                    Add to Favourite
+                                </button>
+                            </div>
                             <hr className="my-6 border-orange-500" />
                             <div className="bg-orange-50 border-l-4 border-orange-500 p-4 rounded-xl shadow-md">
                                 <h2 className="text-2xl font-bold text-orange-500 mb-2">

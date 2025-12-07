@@ -7,6 +7,7 @@ import Login from "../Pages/Login";
 import Private from "../Provider/PrivateRoute";
 import Dashboard from "../Pages/Dashboard";
 import Details from "../Pages/Details";
+import Order from "../Pages/Order";
 
 const router = createBrowserRouter([
     {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
             {
                 path: '/details/:id',
                 element: <Private><Details></Details></Private>
+            },
+            {
+                path: '/order',
+                element: <Private><Order></Order></Private>
             },
             {
                 path: '/register',

@@ -1,14 +1,20 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router"
 import useAxios from "../Hooks/AxiosHooks"
 import Spinner from "../Loader/Spinner"
 import { FaStar } from "react-icons/fa"
+import { AuthContext } from "../Provider/AuthProvider"
+import rating from "daisyui/components/rating"
+import { timeAgo } from "../Components/TimeAgo"
 
 export default function Details() {
     const { id } = useParams()
     const axios = useAxios()
+    const { user } = useContext(AuthContext)
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState([])
+    const [reviews, setReviews] = useState([])
+    const [rating, setRating] = useState([])
 
     useEffect(() => {
         axios.get(`/details/${id}`)
@@ -17,6 +23,29 @@ export default function Details() {
             })
         setLoading(false)
     }, [id])
+    useEffect(() => {
+        axios.get(`/review/${id}`)
+            .then(res => {
+                setReviews(res.data)
+            })
+    }, [id])
+
+    const handleReview = (e) => {
+        e.preventDefault()
+        const form = e.target
+        const comment = form.comment.value
+        const newReview = {
+            foodId: id,
+            userName: user.displayName,
+            photoURL: user.photoURL,
+            comment: comment,
+            rating: rating,
+            date: new Date().toISOString()
+        }
+        axios.post('/review', newReview)
+        setReviews((prev) => [...prev, newReview])
+        form.reset()
+    }
     return (
         <div>
             {
@@ -80,6 +109,66 @@ export default function Details() {
                             <p className="text-sm text-gray-500 mt-6">
                                 Added on: {new Date(data.date).toLocaleDateString()}
                             </p>
+                            <h2 className="font-bold text-xl py-2 w-full border-b border-orange-500">Reviews</h2>
+                            <div>
+                                <div>
+                                    {
+                                        reviews.length == 0 ?
+                                            <p className="text-center text-sm italic text-gray-400 py-6">Be the 1st reviewer</p>
+                                            : (
+                                                <div className="py-5 space-y-4">
+                                                    {
+                                                        reviews.map((review, index) => {
+                                                            return (
+                                                                <div key={index} className="flex items-start gap-2">
+                                                                    <img src={review.photoURL} alt="" className="w-9 h-9 rounded-full object-cover" />
+                                                                    <div className="bg-gray-100 rounded-2xl p-2">
+                                                                        <div className="flex items-center gap-2">
+                                                                            <p className="font-bold">{review.userName}</p>
+                                                                            <p className="text-[10px] text-gray-500">{timeAgo(review.date)}</p>
+                                                                        </div>
+                                                                        <div className="flex items-center gap-2">
+                                                                            <p className="text-sm">{review.comment}</p>
+                                                                            <p className="text-xs text-gray-500"><span className="text-orange-500">★</span>{review.rating == 0 ? 0 : review.rating}/5</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            )
+                                                        })
+                                                    }
+                                                </div>
+                                            )
+                                    }
+                                </div>
+                                <form onSubmit={handleReview}>
+                                    <div className="flex justify-between items-center gap-3 py-5">
+                                        <img src={user.photoURL} alt="" className="w-9 h-9 rounded-full object-cover" />
+                                        <input type="text" name="comment" required className="flex-1 px-3 py-2 w-full rounded-2xl bg-gray-100" placeholder="Leave a review" />
+                                        <button type="submit" className="font-bold text-orange-500 cursor-pointer">Post</button>
+                                    </div>
+                                    <div className="flex items-center gap-2 pl-12 pb-4">
+                                        <p className="font-medium text-gray-600">Rating:</p>
+
+                                        <div className="flex gap-1">
+                                            {[1, 2, 3, 4, 5].map((num) => (
+                                                <button
+                                                    type="button"
+                                                    key={num}
+                                                    onClick={() => setRating(num)}
+                                                    className={`${rating >= num ? "text-orange-500" : "text-gray-300"} 
+                                                    text-2xl transition`}
+                                                >
+                                                    ★
+                                                </button>
+                                            ))}
+                                        </div>
+
+                                        <span className="text-orange-500 font-semibold">
+                                            {rating}/5
+                                        </span>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     )
             }

@@ -24,7 +24,7 @@ export default function Home() {
                     {
                         latestData.map((latest, index) => {
                             return (
-                                <div className="rounded-2xl overflow-hidden shadow-md hover:-translate-y-3 duration-300">
+                                <div key={index} className="rounded-2xl overflow-hidden shadow-md hover:-translate-y-3 duration-300">
                                     <div className="relative">
                                         <img src={latest.foodImage} alt="" className="w-full h-60 object-cover" />
                                         <div className="absolute top-2 left-2 bg-black/30 backdrop-blur-md text-white font-medium text-[12px] px-3 py-1 rounded-2xl">

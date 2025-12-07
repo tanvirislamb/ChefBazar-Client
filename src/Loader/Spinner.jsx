@@ -3,7 +3,7 @@ export default function Spinner() {
         <div className="flex items-center justify-center w-full h-full">
             <div className="
         w-14 h-14 
-        border-[4px] 
+        border-4 
         border-orange-500 
         border-t-transparent 
         rounded-full 

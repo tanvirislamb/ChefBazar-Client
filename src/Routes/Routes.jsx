@@ -4,6 +4,9 @@ import Root from "../Root/Root";
 import Meals from "../Pages/Meals";
 import Register from "../Pages/Register";
 import Login from "../Pages/Login";
+import Private from "../Provider/PrivateRoute";
+import Dashboard from "../Pages/Dashboard";
+import Details from "../Pages/Details";
 
 const router = createBrowserRouter([
     {
@@ -17,6 +20,14 @@ const router = createBrowserRouter([
             {
                 path: '/meals',
                 Component: Meals
+            },
+            {
+                path: '/dashboard',
+                element: <Private><Dashboard></Dashboard></Private>
+            },
+            {
+                path: '/details/:id',
+                element: <Private><Details></Details></Private>
             },
             {
                 path: '/register',

@@ -20,6 +20,10 @@ export default function Navbar() {
                     className={({ isActive }) => `${isActive ? 'font-bold bg-orange-500 text-white shadow-md rounded-2xl px-3 py-1' : ''}`}>Home</NavLink>
                 <NavLink to='/meals'
                     className={({ isActive }) => `${isActive ? 'font-bold bg-orange-500 text-white shadow-md rounded-2xl px-3 py-1' : ''}`}>Meals</NavLink>
+                {
+                    user && <NavLink to='/dashboard'
+                        className={({ isActive }) => `${isActive ? 'font-bold bg-orange-500 text-white shadow-md rounded-2xl px-3 py-1' : ''}`}>Dashboard</NavLink>
+                }
             </div>
             <div>
                 {

@@ -14,6 +14,6 @@ export default function Private({ children }) {
         return children
     }
     else {
-        <Navigate state={location.pathname} to='/login'></Navigate>
+        return <Navigate state={location.pathname} to='/login' />
     }
 }

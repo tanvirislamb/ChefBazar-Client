@@ -31,8 +31,8 @@ export default function Home() {
                                             <p><span className="text-orange-500 font-bold">Chef:</span> {latest.chefName}</p>
                                         </div>
                                     </div>
-                                    <div className="p-4">
-                                        <h3 className="font-bold">{latest.foodName}</h3>
+                                    <div className="p-4 space-y-2">
+                                        <h3 className="font-bold text-[18px]">{latest.foodName}</h3>
                                         <p className="font-semibold text-sm">{latest.price} <span className="text-orange-500">TK</span></p>
                                         <p className="flex items-center gap-1 font-light italic"><FaStar className="text-orange-500" />{latest.rating}</p>
                                         <div className="w-full flex justify-center mt-3">

@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import useAxios from "../Hooks/AxiosHooks";
 import { AuthContext } from "../Provider/AuthProvider";
 
@@ -8,6 +8,8 @@ export default function Register() {
 
     const { registerFuction, update, setUser } = useContext(AuthContext)
     const axios = useAxios()
+    const location = useLocation()
+    const navigate = useNavigate()
 
     const [password, setPassword] = useState("");
     const [confirm, setConfirm] = useState("");
@@ -37,7 +39,8 @@ export default function Register() {
                     email: email,
                     photoURL: image,
                     address: address,
-                    status: "active"
+                    status: "active",
+                    role: "user"
                 }
                 update({
                     displayName: name, photoURL: image
@@ -46,6 +49,7 @@ export default function Register() {
                         setUser({ ...user, displayName: name, photoURL: image })
                     })
                 axios.post('/alluser', newUser)
+                navigate(`${location.state ? location.state : '/'}`)
             })
 
 

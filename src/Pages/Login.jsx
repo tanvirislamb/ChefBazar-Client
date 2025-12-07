@@ -1,10 +1,11 @@
 import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../Provider/AuthProvider";
 
 export default function Login() {
 
     const { logIn } = useContext(AuthContext)
+    const location = useLocation()
     const navigate = useNavigate()
 
     const [password, setPassword] = useState("");
@@ -24,7 +25,7 @@ export default function Login() {
 
         logIn(email, password)
             .then(() =>
-                navigate('/')
+                navigate(`${location.state ? location.state : '/'}`)
             )
     };
 

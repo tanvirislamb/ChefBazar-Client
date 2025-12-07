@@ -8,6 +8,16 @@ import Private from "../Provider/PrivateRoute";
 import Dashboard from "../Pages/Dashboard";
 import Details from "../Pages/Details";
 import Order from "../Pages/Order";
+import Profile from "../Pages/DashboardPages/Profile";
+import MyOrders from "../Pages/DashboardPages/MyOrders";
+import MyReviews from "../Pages/DashboardPages/MyReviews";
+import FavMeals from "../Pages/DashboardPages/FavMeals";
+import CreateMeals from "../Pages/DashboardPages/CreateMeals";
+import MyMeals from "../Pages/DashboardPages/MyMeals";
+import OrderReq from "../Pages/DashboardPages/OrderReq";
+import ManageUser from "../Pages/DashboardPages/ManageUser";
+import ManageReq from "../Pages/DashboardPages/ManageReq";
+import PlatformStat from "../Pages/DashboardPages/PlatformStat";
 
 const router = createBrowserRouter([
     {
@@ -21,10 +31,6 @@ const router = createBrowserRouter([
             {
                 path: '/meals',
                 Component: Meals
-            },
-            {
-                path: '/dashboard',
-                element: <Private><Dashboard></Dashboard></Private>
             },
             {
                 path: '/details/:id',
@@ -41,6 +47,56 @@ const router = createBrowserRouter([
             {
                 path: '/login',
                 Component: Login
+            }
+        ]
+    },
+    {
+        path: '/dashboard',
+        element: <Private><Dashboard></Dashboard></Private>,
+        children: [
+            {
+                index: true,
+                Component: Profile
+            },
+            {
+                path: '/dashboard/profile',
+                Component: Profile
+            },
+            {
+                path: '/dashboard/myorders',
+                Component: MyOrders
+            },
+            {
+                path: '/dashboard/myreviews',
+                Component: MyReviews
+            },
+            {
+                path: '/dashboard/myfavmeals',
+                Component: FavMeals
+            },
+            {
+                path: '/dashboard/createmeals',
+                Component: CreateMeals
+            },
+            {
+                path: '/dashboard/mymeals',
+                Component: MyMeals
+            },
+            {
+                path: '/dashboard/orderrequest',
+                Component: OrderReq
+            },
+            {
+                path: '/dashboard/manageuser',
+                Component: ManageUser
+            },
+            {
+                path: '/dashboard/managerequest',
+                Component: ManageReq
+            },
+            {
+                path: '/dashboard/platformstatistics',
+                Component: PlatformStat
             }
         ]
     }

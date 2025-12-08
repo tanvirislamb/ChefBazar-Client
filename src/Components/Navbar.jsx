@@ -7,7 +7,7 @@ export default function Navbar() {
     const { user, logout } = useContext(AuthContext)
 
     return (
-        <nav className="flex justify-between items-center px-10 py-3 rounded-b-xl shadow border-b border-gray-200 sticky top-0 z-10 bg-white">
+        <nav className="flex justify-between items-center px-5 md:px-10 py-3 rounded-b-xl shadow border-b border-gray-200 sticky top-0 z-10 bg-white">
             <Link to='/'
                 className="flex items-center gap-1">
                 <PiChefHatBold className="text-3xl text-orange-500" />
@@ -15,7 +15,7 @@ export default function Navbar() {
                     className="text-2xl font-extrabold text-orange-500">
                     Chef<span className="text-black">Bazar</span></h1>
             </Link>
-            <div className="flex items-center gap-4 font-semibold">
+            <div className="hidden md:flex items-center gap-4 font-semibold">
                 <NavLink to='/'
                     className={({ isActive }) => `${isActive ? 'font-bold bg-orange-500 text-white shadow-md rounded-2xl px-3 py-1' : ''}`}>Home</NavLink>
                 <NavLink to='/meals'
@@ -30,14 +30,14 @@ export default function Navbar() {
                     user ?
                         (
                             <div className="flex items-center gap-4">
-                                <img src={user.photoURL} alt="" className="w-9 h-9 rounded-full object-cover" />
+                                <img src={user.photoURL} alt="" className="w-7 md:w-9 h-7 md:h-9 rounded-full object-cover" />
                                 <button
                                     onClick={logout}
-                                    className="px-3 py-1 rounded-2xl bg-orange-500 text-white font-semibold">Log Out</button>
+                                    className="px-3 py-1 rounded-2xl bg-orange-500 text-xs md:text-base text-white font-semibold">Log Out</button>
                             </div>
                         )
                         : (
-                            <div className="flex items-center gap-4 text-white font-semibold">
+                            <div className="flex items-center gap-4 text-white text-xs md:text-base font-semibold">
                                 <Link to='/login'
                                     className="px-3 py-1 rounded-2xl bg-orange-500">
                                     Log In

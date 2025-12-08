@@ -30,7 +30,7 @@ export default function Meals() {
 
     return (
         <div className="m-5">
-            <h1 className="text-center font-bold text-3xl w-full py-4 bg-gray-100 rounded-2xl border-x-3 border-orange-500 drop-shadow-md my-5">Explore Our All Meals</h1>
+            <h1 className="text-center font-bold text-2xl md:text-3xl w-full py-4 bg-gray-100 rounded-2xl border-x-3 border-orange-500 drop-shadow-md my-5">Explore Our All Meals</h1>
             <div className="w-full flex justify-between items-center border-b-2 border-orange-500 mt-10 pb-3">
                 <h3 className="text-xl font-bold">Meals Found {meals.length}</h3>
                 <select
@@ -43,7 +43,7 @@ export default function Meals() {
                     <option value="high">High to Low</option>
                 </select>
             </div>
-            <div className="grid grid-cols-4 gap-6 mt-10 max-w-[1600px] mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-10 max-w-[1600px] mx-auto">
                 {
                     sortedMeals.map((meal, index) => {
                         return (

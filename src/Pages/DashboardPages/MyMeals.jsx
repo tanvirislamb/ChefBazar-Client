@@ -40,7 +40,7 @@ export default function MyMeals() {
                         refetch()
                     })
             }
-        });
+        })
     }
 
     return (

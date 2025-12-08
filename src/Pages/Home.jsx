@@ -19,8 +19,8 @@ export default function Home() {
         <div>
             <Banner />
             <div className="mt-5 mx-4">
-                <h1 className="text-center font-bold text-3xl w-full py-4 bg-gray-100 rounded-2xl border-b-3 border-orange-500 drop-shadow-md">Our Latest Meals</h1>
-                <div className="grid grid-cols-3 gap-6 justify-center max-w-[1200px] mx-auto my-10">
+                <h1 className="text-center font-bold text-2xl md:text-3xl w-full py-4 bg-gray-100 rounded-2xl border-b-3 border-orange-500 drop-shadow-md">Our Latest Meals</h1>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center max-w-[1200px] mx-auto my-10">
                     {
                         latestData.map((latest, index) => {
                             return (

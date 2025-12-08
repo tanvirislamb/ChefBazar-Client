@@ -31,7 +31,7 @@ export default function MyOrders() {
                                 orders.map((order, index) => {
                                     return (
                                         <div key={index}
-                                            className="rounded-2xl bg-white border border-gray-100 border-l-3 border-l-orange-500 shadow-sm p-6 
+                                            className="rounded-2xl bg-orange-50 border-l-5 border-l-orange-500 shadow-sm p-6 
                                            hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden">
                                             <h2 className="text-2xl font-bold text-gray-900 mb-4 tracking-wide">
                                                 <span className="bg-linear-to-r from-orange-500 to-orange-400 bg-clip-text text-transparent">{order.foodName}
@@ -80,7 +80,7 @@ export default function MyOrders() {
                                                 </div>
                                                 <div className="flex items-center justify-between">
                                                     <span className="font-medium">Payment Status:</span>
-                                                    <span className="px-3 py-1 rounded-lg bg-gray-100 text-gray-800 capitalize">
+                                                    <span className="px-3 py-1 rounded-lg shadow-sm bg-orange-200 text-gray-800 capitalize">
                                                         {order.paymentStatus}
                                                     </span>
                                                 </div>

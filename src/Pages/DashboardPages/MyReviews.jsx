@@ -2,20 +2,45 @@ import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../Provider/AuthProvider"
 import useAxios from "../../Hooks/AxiosHooks"
 import { timeAgo } from "../../Components/TimeAgo"
+import { useQuery } from "@tanstack/react-query"
+import Swal from "sweetalert2"
 
 export default function MyReviews() {
 
     const { user } = useContext(AuthContext)
     const axios = useAxios()
 
-    const [reviews, setReviews] = useState([])
+    const { data: reviews = [], isLoading, refetch } = useQuery({
+        queryKey: ['reviews', user.uid],
+        queryFn: async () => {
+            const res = await axios.get(`/myreview/${user.uid}`)
+            return res.data
+        }
+    })
 
-    useEffect(() => {
-        axios.get(`/myreview/${user.uid}`)
-            .then((res) => {
-                setReviews(res.data)
-            })
-    }, [])
+    const reviewDelete = (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "After Delete You Can't Revert It!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`/myreview/delete/${id}`)
+                    .then(() => {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Your file has been deleted.",
+                            icon: "success"
+                        });
+                        refetch()
+                    })
+            }
+        });
+    }
 
     return (
         <div className="mx-5 py-5">
@@ -30,7 +55,7 @@ export default function MyReviews() {
                                 reviews.map((review, index) => {
                                     return (
                                         <div key={index}
-                                            className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 
+                                            className="bg-orange-50 rounded-2xl shadow-sm p-6 border-l-5 border-orange-500 
                                                           hover:shadow-xl hover:-translate-y-1 transition-all duration-300 my-4">
                                             <div className="flex items-center justify-between mb-3">
                                                 <h2 className="text-xl font-bold text-gray-900">
@@ -56,11 +81,13 @@ export default function MyReviews() {
                                                 Commented: {timeAgo(review.date)}
                                             </p>
                                             <div className="flex items-center gap-3">
-                                                <button className="px-4 py-2 rounded-lg border border-orange-500 text-orange-500 font-semibold hover:bg-orange-500 hover:text-white transition">
+                                                <button className="px-4 py-2 rounded-lg border font-semibold bg-orange-500 text-white transition cursor-pointer">
                                                     Update
                                                 </button>
 
-                                                <button className="px-4 py-2 rounded-lg bg-red-500 text-white font-semibold hover:bg-red-600 transition">
+                                                <button
+                                                    onClick={() => { reviewDelete(review._id) }}
+                                                    className="px-4 py-2 rounded-lg bg-red-500 text-white font-semibold hover:bg-red-600 transition cursor-pointer">
                                                     Delete
                                                 </button>
                                             </div>

@@ -4,11 +4,15 @@ import useAxios from "../../Hooks/AxiosHooks"
 import { timeAgo } from "../../Components/TimeAgo"
 import { useQuery } from "@tanstack/react-query"
 import Swal from "sweetalert2"
+import UpdateModal from "../../Components/UpdateModal"
 
 export default function MyReviews() {
 
     const { user } = useContext(AuthContext)
     const axios = useAxios()
+
+    const [reviewModal, setReviewModal] = useState(false)
+    const [selectedReview, setSelectedReview] = useState(null);
 
     const { data: reviews = [], isLoading, refetch } = useQuery({
         queryKey: ['reviews', user.uid],
@@ -81,10 +85,11 @@ export default function MyReviews() {
                                                 Commented: {timeAgo(review.date)}
                                             </p>
                                             <div className="flex items-center gap-3">
-                                                <button className="px-4 py-2 rounded-lg border font-semibold bg-orange-500 text-white transition cursor-pointer">
+                                                <button
+                                                    onClick={() => { setReviewModal(true); setSelectedReview(review) }}
+                                                    className="px-4 py-2 rounded-lg border font-semibold bg-orange-500 text-white transition cursor-pointer">
                                                     Update
                                                 </button>
-
                                                 <button
                                                     onClick={() => { reviewDelete(review._id) }}
                                                     className="px-4 py-2 rounded-lg bg-red-500 text-white font-semibold hover:bg-red-600 transition cursor-pointer">
@@ -98,6 +103,12 @@ export default function MyReviews() {
                         </div>
                 }
             </div>
+            <UpdateModal
+                isOpen={reviewModal}
+                onClose={() => setReviewModal(false)}
+                review={selectedReview}
+                refetch
+            />
         </div>
     )
 }

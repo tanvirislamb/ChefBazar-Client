@@ -18,6 +18,7 @@ import OrderReq from "../Pages/DashboardPages/OrderReq";
 import ManageUser from "../Pages/DashboardPages/ManageUser";
 import ManageReq from "../Pages/DashboardPages/ManageReq";
 import PlatformStat from "../Pages/DashboardPages/PlatformStat";
+import UpdateMeal from "../Pages/DashboardPages/UpdateMeal";
 
 const router = createBrowserRouter([
     {
@@ -81,6 +82,10 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/mymeals',
                 Component: MyMeals
+            },
+            {
+                path: '/dashboard/update',
+                Component: UpdateMeal
             },
             {
                 path: '/dashboard/orderrequest',

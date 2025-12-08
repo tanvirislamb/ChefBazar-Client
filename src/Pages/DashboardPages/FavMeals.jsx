@@ -19,16 +19,27 @@ export default function FavMeals() {
     })
 
     const Handledelete = id => {
-        axios.delete(`/meals/favourite/del/${id}`)
-            .then(() => {
-                Swal.fire({
-                    title: "Deleted successfully!",
-                    icon: "success",
-                    draggable: true,
-                    confirmButtonColor: '#f97316'
-                });
-                refetch()
-            })
+        Swal.fire({
+            title: "Are you sure?",
+            text: "After Delete You Can't Revert It!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`/meals/favourite/del/${id}`)
+                    .then(() => {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Deleted successfully!",
+                            icon: "success"
+                        });
+                        refetch()
+                    })
+            }
+        })
     }
 
     return (

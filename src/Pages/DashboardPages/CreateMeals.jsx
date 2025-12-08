@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import useAxios from "../../Hooks/AxiosHooks";
+import Swal from "sweetalert2";
 
 export default function CreateMeals() {
 
@@ -66,6 +67,12 @@ export default function CreateMeals() {
             .then(() => {
                 setUploading(false)
                 setPreview(null)
+                Swal.fire({
+                    title: "Meal added successfully!",
+                    icon: "success",
+                    draggable: true,
+                    confirmButtonColor: '#f97316'
+                });
             })
         form.reset()
     }

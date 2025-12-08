@@ -107,7 +107,7 @@ export default function MyReviews() {
                 isOpen={reviewModal}
                 onClose={() => setReviewModal(false)}
                 review={selectedReview}
-                refetch
+                refetch={refetch}
             />
         </div>
     )

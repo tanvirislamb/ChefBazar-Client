@@ -61,9 +61,11 @@ export default function Details() {
             foodId: id,
             userEmail: user.email,
             userId: user.uid,
+            foodImage: data.foodImage,
+            foodName: data.foodName,
             userName: user.displayName,
             chefId: data.chedId,
-            chefNmae: data.chefName,
+            chefName: data.chefName,
             date: new Date().toISOString()
 
         }

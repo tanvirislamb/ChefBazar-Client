@@ -49,7 +49,7 @@ export default function Profile() {
                                 {person.role === "chef" && (
                                     <div className="flex justify-between">
                                         <span className="font-semibold">Chef ID:</span>
-                                        <span>{person.userId}</span>
+                                        <span>{person.chefId}</span>
                                     </div>
                                 )}
                             </div>

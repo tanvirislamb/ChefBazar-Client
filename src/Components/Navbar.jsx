@@ -33,17 +33,17 @@ export default function Navbar() {
                                 <img src={user.photoURL} alt="" className="w-7 md:w-9 h-7 md:h-9 rounded-full object-cover" />
                                 <button
                                     onClick={logout}
-                                    className="px-3 py-1 rounded-2xl bg-orange-500 text-xs md:text-base text-white font-semibold">Log Out</button>
+                                    className="px-3 py-1 rounded-2xl bg-orange-500 text-xs md:text-base text-white font-semibold cursor-pointer">Log Out</button>
                             </div>
                         )
                         : (
                             <div className="flex items-center gap-4 text-white text-xs md:text-base font-semibold">
                                 <Link to='/login'
-                                    className="px-3 py-1 rounded-2xl bg-orange-500">
+                                    className="px-3 py-1 rounded-2xl bg-orange-500 cursor-pointer">
                                     Log In
                                 </Link>
                                 <Link to='/register'
-                                    className="px-3 py-1 rounded-2xl bg-orange-500">
+                                    className="px-3 py-1 rounded-2xl bg-orange-500 cursor-pointer">
                                     Register
                                 </Link>
                             </div>

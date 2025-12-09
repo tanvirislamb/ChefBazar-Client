@@ -4,9 +4,10 @@ import useAxios from "../Hooks/AxiosHooks"
 import Spinner from "../Loader/Spinner"
 import { FaStar } from "react-icons/fa"
 import { AuthContext } from "../Provider/AuthProvider"
-// import rating from "daisyui/components/rating"
 import { timeAgo } from "../Components/TimeAgo"
 import Swal from "sweetalert2"
+import { useQuery } from "@tanstack/react-query"
+import button from "daisyui/components/button"
 
 export default function Details() {
     const { id } = useParams()
@@ -30,6 +31,14 @@ export default function Details() {
                 setReviews(res.data)
             })
     }, [id])
+
+    const { data: person = [], isloading } = useQuery({
+        queryKey: ['person', user.uid],
+        queryFn: async () => {
+            const res = await axios.get(`/user/${user.uid}`)
+            return res.data
+        }
+    })
 
     const handleReview = (e) => {
         e.preventDefault()
@@ -111,12 +120,17 @@ export default function Details() {
                                 <FaStar className="text-orange-500" /> {data.rating} / 5
                             </p>
                             <div className="flex flex-col sm:flex-row gap-4 mt-4">
-                                <Link to="/order"
-                                    state={{ meal: data }}
-                                    className="flex-1 py-2 rounded-2xl bg-orange-500 text-white text-center font-bold hover:bg-orange-600 transition"
-                                >
-                                    Order Now
-                                </Link>
+                                {
+                                    person.status === "fraud" ?
+                                        <button className="flex-1 py-2 rounded-2xl bg-gray-200 cursor-not-allowed text-white text-center font-bol transition">Order Now</button>
+                                        :
+                                        <Link to="/order"
+                                            state={{ meal: data }}
+                                            className="flex-1 py-2 rounded-2xl bg-orange-500 text-white text-center font-bold hover:bg-orange-600 transition"
+                                        >
+                                            Order Now
+                                        </Link>
+                                }
 
                                 <button
                                     className="flex-1 py-2 rounded-2xl border-2 border-orange-500 text-orange-500 font-bold hover:bg-orange-50 transition"

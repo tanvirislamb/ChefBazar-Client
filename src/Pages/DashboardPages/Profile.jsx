@@ -3,6 +3,7 @@ import { AuthContext } from "../../Provider/AuthProvider"
 import { useQuery } from "@tanstack/react-query"
 import useAxios from "../../Hooks/AxiosHooks"
 import Spinner from "../../Loader/Spinner"
+import Swal from "sweetalert2"
 
 export default function Profile() {
     const { user } = useContext(AuthContext)
@@ -15,6 +16,64 @@ export default function Profile() {
             return res.data
         }
     })
+
+    const handleBeChef = () => {
+        const request = {
+            photoURL: user.photoURL,
+            userId: user.uid,
+            userName: person.name,
+            userEmail: user.email,
+            requestType: "chef",
+            requestStatus: "pending",
+            requestTime: new Date().toISOString()
+        }
+        axios.post('/request', request)
+            .then(() => {
+                Swal.fire({
+                    title: "Request Sent",
+                    icon: "success",
+                    draggable: true,
+                    confirmButtonColor: '#f97316'
+                });
+            })
+            .catch((error) => {
+                Swal.fire({
+                    title: "Request Already Sent",
+                    icon: "warning",
+                    draggable: true,
+                    confirmButtonColor: '#f97316'
+                });
+            })
+    }
+    const handleBeAdmin = () => {
+        const request = {
+            photoURL: user.photoURL,
+            userId: user.uid,
+            userName: person.name,
+            userEmail: user.email,
+            requestType: "admin",
+            requestStatus: "pending",
+            requestTime: new Date().toISOString()
+        }
+        axios.post('/request', request)
+            .then(() => {
+                Swal.fire({
+                    title: "Request Sent",
+                    icon: "success",
+                    draggable: true,
+                    confirmButtonColor: '#f97316'
+                });
+            })
+            .catch((error) => {
+                Swal.fire({
+                    title: "Request Already Sent",
+                    icon: "warning",
+                    draggable: true,
+                    confirmButtonColor: '#f97316'
+                });
+            })
+    }
+
     return (
         <div>
             {
@@ -55,13 +114,15 @@ export default function Profile() {
                             </div>
                             <div className="mt-8 flex flex-col gap-3">
                                 {person.role !== "chef" && person.role !== "admin" && (
-                                    <button className="w-full py-2 rounded-md bg-orange-500 text-white font-semibold hover:bg-orange-600">
+                                    <button onClick={handleBeChef}
+                                        className="w-full py-2 rounded-md bg-orange-500 text-white font-semibold hover:bg-orange-600 cursor-pointer">
                                         Be a Chef
                                     </button>
                                 )}
 
                                 {person.role !== "admin" && (
-                                    <button className="w-full py-2 rounded-md border border-orange-500 text-orange-500 font-semibold hover:bg-orange-50">
+                                    <button onClick={handleBeAdmin}
+                                        className="w-full py-2 rounded-md border border-orange-500 text-orange-500 font-semibold hover:bg-orange-50">
                                         Be an Admin
                                     </button>
                                 )}

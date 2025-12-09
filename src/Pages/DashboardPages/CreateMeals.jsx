@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import useAxios from "../../Hooks/AxiosHooks";
 import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
 
 export default function CreateMeals() {
 
@@ -76,6 +77,14 @@ export default function CreateMeals() {
             })
         form.reset()
     }
+
+    const { data: person = [], isloading } = useQuery({
+        queryKey: ['person', user.uid],
+        queryFn: async () => {
+            const res = await axios.get(`/user/${user.uid}`)
+            return res.data
+        }
+    })
 
     return (
         <div className="mx-5 py-5">
@@ -152,7 +161,9 @@ export default function CreateMeals() {
                     <label className="text-gray-700 font-medium">User Email</label>
                     <input type="text" name="email" value={user.email} className="w-full px-3 py-2 rounded-xl bg-gray-50 shadow-inner" />
 
-                    <button type="submit" className="w-full py-2 mt-3 bg-orange-500 text-white text-center font-semibold rounded-2xl">
+                    <button type="submit"
+                        disabled={person.status === "fraud"}
+                        className={`w-full py-2 mt-3 text-white text-center font-semibold rounded-2xl ${person.status === "fraud" ? "bg-gray-200 cursor-not-allowed" : "bg-orange-500 cursor-pointer"}`}>
                         {
                             uploading ? <span className="loading loading-spinner loading-xs"></span>
                                 : "Submit"

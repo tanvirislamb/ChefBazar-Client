@@ -43,8 +43,8 @@ export default function Order() {
                 userEmail: user.email,
                 deliveryTime: meal.estimatedDeliveryTime,
                 userAddress,
-                orderStatus: "pending",
-                paymentStatus: "pending",
+                orderStatus: "Pending",
+                paymentStatus: "Pending",
                 orderTime: new Date().toISOString()
             };
 

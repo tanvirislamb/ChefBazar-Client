@@ -4,31 +4,70 @@ import Spinner from "../../Loader/Spinner"
 import { useContext } from "react"
 import { AuthContext } from "../../Provider/AuthProvider"
 import Swal from "sweetalert2"
+import { timeAgo } from "../../Components/TimeAgo"
 
 export default function ManageReq() {
 
     const { user } = useContext(AuthContext)
 
     const axios = useAxios()
-    const { data: users = [], isLoading, refetch } = useQuery({
-        queryKey: ['users'],
+    const { data: requsers = [], isLoading, refetch } = useQuery({
+        queryKey: ['requsers'],
         queryFn: async () => {
             const res = await axios.get('/request')
             return res.data
         }
     })
 
-    // const handleStatus = (id) => {
-    //     axios.patch(`/user/status/${id}`, { status: "fraud" })
-    //         .then(() => {
-    //             Swal.fire({
-    //                 title: "Fraud!",
-    //                 text: "Updated successfully!",
-    //                 icon: "success"
-    //             });
-    //             refetch()
-    //         })
-    // }
+    const handleRole = (person) => {
+
+        const generateChefId = () => {
+            const random = Math.floor(1000 + Math.random() * 9000)
+            return `CHEF${random}`
+        };
+
+
+        if (person.requestType === "admin") {
+            axios.patch(`/user/role/${person.userId}`, { role: person.requestType })
+                .then(() => {
+                    axios.patch(`/request/status/${person.userId}`, { requestStatus: "approved" })
+                        .then(() => {
+                            Swal.fire({
+                                title: "Admin!",
+                                text: "Updated successfully!",
+                                icon: "success"
+                            });
+                            refetch()
+                        })
+                })
+        } else {
+            axios.patch(`/user/role/chef/${person.userId}`,
+                { role: person.requestType, chefId: generateChefId() })
+                .then(() => {
+                    axios.patch(`/request/status/${person.userId}`, { requestStatus: "approved" })
+                        .then(() => {
+                            Swal.fire({
+                                title: "Chef!",
+                                text: "Updated successfully!",
+                                icon: "success"
+                            });
+                            refetch()
+                        })
+                })
+        }
+    }
+
+    const handleCancel = (person) => {
+        axios.patch(`/request/status/${person.userId}`, { requestStatus: "rejected" })
+            .then(() => {
+                Swal.fire({
+                    title: "Cancled!",
+                    text: "Canceled successfully!",
+                    icon: "success"
+                });
+                refetch()
+            })
+    }
 
     return (
         <div className="mx-5 py-5">
@@ -47,12 +86,13 @@ export default function ManageReq() {
                                             <th className="p-3">Email</th>
                                             <th className="p-3">Request Type</th>
                                             <th className="p-3">Status</th>
+                                            <th className="p-3">Request Time</th>
                                             <th className="p-3">Action</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
-                                        {users.map((person, index) => (
+                                        {requsers.map((person, index) => (
                                             <tr key={index} className="border-b border-gray-100 hover:bg-gray-50">
                                                 <td className="p-3">{index + 1}</td>
 
@@ -71,20 +111,24 @@ export default function ManageReq() {
                                                 <td className="p-3">{person.requestType}</td>
 
                                                 <td className="p-3 font-semibold">{person.requestStatus}</td>
+                                                <td className="p-3 font-semibold">{timeAgo(person.requestTime)}</td>
 
-                                                {/* <td className="p-3">
-                                                    {
-                                                        user.uid !== person.userId && <button
-                                                            onClick={() => handleStatus(person.userId)}
-                                                            disabled={person.status === "fraud"}
-                                                            className={`px-3 py-1 rounded-md text-white font-medium ${person.status === "fraud"
-                                                                ? "bg-gray-300 cursor-not-allowed"
-                                                                : "bg-black cursor-pointer"
-                                                                }`}>
-                                                            Make Fraud
-                                                        </button>
-                                                    }
-                                                </td> */}
+                                                <td className="p-3 space-x-3">
+                                                    <button
+                                                        onClick={() => handleRole(person)}
+                                                        disabled={person.requestStatus === "rejected" || person.requestStatus === "approved"}
+                                                        className={`px-3 py-1 rounded-md text-white font-medium 
+                                                            ${person.requestStatus === "rejected" || person.requestStatus === "approved"
+                                                                ? "bg-gray-200 cursor-not-allowed"
+                                                                : "bg-orange-500 cursor-pointer"
+                                                            }`}>
+                                                        Accept
+                                                    </button>
+                                                    <button onClick={() => handleCancel(person)}
+                                                        disabled={person.requestStatus === "rejected" || person.requestStatus === "approved"}
+                                                        className={`px-3 py-1 rounded-md text-white font-medium
+                                                    ${person.requestStatus === "rejected" || person.requestStatus === "approved" ? "bg-gray-200 cursor-not-allowed" : "bg-black cursor-pointer"}`}>Reject</button>
+                                                </td>
                                             </tr>
                                         ))}
                                     </tbody>

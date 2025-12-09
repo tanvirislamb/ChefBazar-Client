@@ -74,7 +74,7 @@ export default function ManageUser() {
 
                                                 <td className="p-3">
                                                     {
-                                                        user.uid !== person.userId && <button
+                                                        person.role !== "admin" && <button
                                                             onClick={() => handleStatus(person.userId)}
                                                             disabled={person.status === "fraud"}
                                                             className={`px-3 py-1 rounded-md text-white font-medium ${person.status === "fraud"

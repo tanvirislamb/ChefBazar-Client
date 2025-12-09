@@ -80,9 +80,18 @@ export default function MyOrders() {
                                                 </div>
                                                 <div className="flex items-center justify-between">
                                                     <span className="font-medium">Payment Status:</span>
-                                                    <span className="px-3 py-1 rounded-lg shadow-sm bg-orange-200 text-gray-800 capitalize">
-                                                        {order.paymentStatus}
-                                                    </span>
+                                                    {
+                                                        order.orderStatus === "Pending" ?
+                                                            <span className="px-3 py-1 rounded-lg shadow-sm bg-orange-200 text-gray-800 capitalize">
+                                                                {order.paymentStatus}
+                                                            </span> :
+                                                            <button
+                                                                disabled={order.orderStatus === "Cancelled"}
+                                                                className={`px-3 py-1 rounded-2xl shadow-sm  text-white capitalize
+                                                            ${order.orderStatus === "Cancelled" ? "bg-gray-200 cursor-not-allowed" : "bg-orange-500 cursor-pointer"}`}>
+                                                                Pay
+                                                            </button>
+                                                    }
                                                 </div>
                                             </div>
                                         </div>

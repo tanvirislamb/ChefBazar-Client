@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useLocation } from "react-router"
 import useAxios from "../../Hooks/AxiosHooks";
 import Swal from "sweetalert2";
+import { useForm } from "react-hook-form";
 
 export default function UpdateMeal() {
 
@@ -11,23 +12,23 @@ export default function UpdateMeal() {
 
     const axios = useAxios()
 
-    const handleUpdateMeal = e => {
-        setUpdating(true)
-        e.preventDefault()
+    const { register, handleSubmit } = useForm()
 
-        const form = e.target
+    const handleUpdateMeal = (data) => {
+        setUpdating(true)
+
         const updatedData = {
-            foodName: form.foodName.value,
-            ingredients: form.ingredients.value
+            foodName: data.foodName,
+            ingredients: data.ingredients
                 .split(",")
                 .map(item => item.trim()),
-            chefName: form.chefName.value,
-            price: form.price.value,
-            rating: form.rating.value,
-            deliveryArea: form.deliveryArea.value,
-            estimatedDeliveryTime: form.deliveryTime.value,
-            chefExperience: form.experience.value,
-            chefId: form.chefId.value
+            chefName: data.chefName,
+            price: data.price,
+            rating: data.rating,
+            deliveryArea: data.deliveryArea,
+            estimatedDeliveryTime: data.deliveryTime,
+            chefExperience: data.experience,
+            chefId: data.chefId
         }
         axios.patch(`/chef/meal/${meal._id}`, updatedData)
             .then(() => {
@@ -46,48 +47,48 @@ export default function UpdateMeal() {
 
             <div className="flex justify-center items-center">
                 <form
-                    onSubmit={handleUpdateMeal}
+                    onSubmit={handleSubmit(handleUpdateMeal)}
                     className="max-w-5xl px-6 pt-10 pb-5 rounded-2xl space-y-5 shadow-md my-10 border-2 border-orange-500">
 
                     <div className="space-y-4">
                         <label className="text-gray-700 font-medium">Food Name</label>
-                        <input type="text" name="foodName" required defaultValue={meal.foodName}
+                        <input type="text" {...register('foodName')} required defaultValue={meal.foodName}
                             placeholder="Pizza" className="w-full px-3 py-2 rounded-xl bg-gray-50 shadow-inner" />
 
                         <label className="text-gray-700 font-medium">Chef Name</label>
-                        <input type="text" name="chefName" required defaultValue={meal.chefName}
+                        <input type="text" {...register('chefName')} required defaultValue={meal.chefName}
                             placeholder="Chef name" className="w-full px-3 py-2 rounded-xl bg-gray-50 shadow-inner" />
 
                         <label className="text-gray-700 font-medium">Price</label>
-                        <input type="number" name="price" required defaultValue={meal.price}
+                        <input type="number" {...register('price')} required defaultValue={meal.price}
                             placeholder="350" className="w-full px-3 py-2 rounded-xl bg-gray-50 shadow-inner" />
                     </div>
 
                     <label className="text-gray-700 font-medium">Rating</label>
-                    <input type="number" name="rating" step="0.1" min="0" max="5" required defaultValue={meal.rating}
+                    <input type="number" {...register('rating')} step="0.1" min="0" max="5" required defaultValue={meal.rating}
                         placeholder="4.5" className="w-full px-3 py-2 rounded-xl bg-gray-50 shadow-inner" />
 
                     <label className="text-gray-700 font-medium">Ingredients</label>
-                    <input type="text" name="ingredients" required defaultValue={meal.ingredients?.join(", ")}
+                    <input type="text" {...register('ingredients')} required defaultValue={meal.ingredients?.join(", ")}
                         placeholder="Salt, Pepper, Chicken, Onion" className="w-full px-3 py-2 rounded-xl bg-gray-50 shadow-inner" />
 
                     <label className="text-gray-700 font-medium">Delivery Area</label>
-                    <input type="text" name="deliveryArea" required defaultValue={meal.deliveryArea}
+                    <input type="text" {...register('deliveryArea')} required defaultValue={meal.deliveryArea}
                         placeholder="Bogura" className="w-full px-3 py-2 rounded-xl bg-gray-50 shadow-inner" />
 
                     <label className="text-gray-700 font-medium">Estimated Delivery Time</label>
-                    <input type="text" name="deliveryTime" required defaultValue={meal.estimatedDeliveryTime}
+                    <input type="text" {...register('deliveryTime')} required defaultValue={meal.estimatedDeliveryTime}
                         placeholder="20 min" className="w-full px-3 py-2 rounded-xl bg-gray-50 shadow-inner" />
 
                     <label className="text-gray-700 font-medium">Chef’s Experience</label>
-                    <input type="text" name="experience" required defaultValue={meal.chefExperience}
+                    <input type="text" {...register('experience')} required defaultValue={meal.chefExperience}
                         placeholder="10 years" className="w-full px-3 py-2 rounded-xl bg-gray-50 shadow-inner" />
 
                     <label className="text-gray-700 font-medium">Chef ID</label>
-                    <input type="text" name="chefId" required defaultValue={meal.chefId}
+                    <input type="text" {...register('chefId')} required defaultValue={meal.chefId}
                         placeholder="CHEF1056" className="w-full px-3 py-2 rounded-xl bg-gray-50 shadow-inner" />
 
-                    <button type="submit" className="w-full py-2 mt-3 bg-orange-500 text-white text-center font-semibold rounded-2xl">
+                    <button type="submit" className="w-full py-2 mt-3 bg-orange-500 text-white text-center font-semibold rounded-2xl cursor-pointer">
                         {
                             updating ? <span className="loading loading-spinner loading-xs"></span>
                                 : "Submit"

@@ -86,7 +86,7 @@ export default function OrderReq() {
                                                         <p><span className="font-semibold">Email:</span> {order.userEmail}</p>
                                                         <p><span className="font-semibold">Order Time:</span> {timeAgo(order.orderTime)}</p>
                                                         <p><span className="font-semibold">Address:</span> {order.userAddress}</p>
-                                                        <p><span className="font-semibold">Payment:</span> {order.paymentStatus}</p>
+                                                        <p><span className="font-semibold">Payment:</span > <span className={`${order.paymentStatus === "paid" ? 'bg-green-100 text-green-500 font-semibold px-3 py-0.5 rounded-xl' : ''}`}>{order.paymentStatus}</span></p>
                                                     </div>
                                                     <div className="flex items-center gap-4 mt-4">
                                                         <button onClick={() => handleCancel(order._id)}

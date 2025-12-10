@@ -11,9 +11,6 @@ export default function SuccessPage() {
     useEffect(() => {
         if (sessionId) {
             axios.patch(`/payment-success?session_id=${sessionId}`)
-                .then(res => {
-                    console.log(res.data)
-                })
         }
     }, [sessionId])
 

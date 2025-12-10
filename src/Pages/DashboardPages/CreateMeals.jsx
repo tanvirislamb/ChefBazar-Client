@@ -3,6 +3,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import useAxios from "../../Hooks/AxiosHooks";
 import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
 
 export default function CreateMeals() {
 
@@ -26,10 +27,11 @@ export default function CreateMeals() {
         handleFile(file);
     };
 
+    const { register, handleSubmit, reset } = useForm()
 
 
-    const handleCreateMeal = async (e) => {
-        e.preventDefault()
+
+    const handleCreateMeal = async (data) => {
         setUploading(true)
         let imageURL = null
 
@@ -43,22 +45,20 @@ export default function CreateMeals() {
             )
             imageURL = upload.data.data.url;
         }
-
-        const form = e.target
         const newMeals = {
             foodImage: imageURL,
             userId: user.uid,
-            foodName: form.foodName.value,
-            ingredients: form.ingredients.value
+            foodName: data.foodName,
+            ingredients: data.ingredients
                 .split(",")
                 .map(item => item.trim()),
-            chefName: form.chefName.value,
-            price: form.price.value,
-            rating: form.rating.value,
-            deliveryArea: form.deliveryArea.value,
-            estimatedDeliveryTime: form.deliveryTime.value,
-            chefExperience: form.experience.value,
-            chefId: form.chefId.value,
+            chefName: data.chefName,
+            price: data.price,
+            rating: data.rating,
+            deliveryArea: data.deliveryArea,
+            estimatedDeliveryTime: data.deliveryTime,
+            chefExperience: data.experience,
+            chefId: data.chefId,
             chefEmail: user.email,
             date: new Date().toISOString()
 
@@ -74,8 +74,8 @@ export default function CreateMeals() {
                     draggable: true,
                     confirmButtonColor: '#f97316'
                 });
+                reset()
             })
-        form.reset()
     }
 
     const { data: person = [], isloading } = useQuery({
@@ -92,7 +92,7 @@ export default function CreateMeals() {
 
             <div className="flex justify-center items-center">
                 <form
-                    onSubmit={handleCreateMeal}
+                    onSubmit={handleSubmit(handleCreateMeal)}
                     className="max-w-5xl px-6 pt-10 pb-5 rounded-2xl space-y-5 shadow-md my-10 border-2 border-orange-500">
 
                     <div className="flex flex-col md:flex-row justify-between items-center gap-5">
@@ -121,45 +121,45 @@ export default function CreateMeals() {
                         </div>
                         <div className="space-y-4">
                             <label className="text-gray-700 font-medium">Food Name</label>
-                            <input type="text" name="foodName" required
+                            <input type="text" {...register('foodName')} required
                                 placeholder="Pizza" className="w-full px-3 py-2 rounded-xl bg-gray-50 shadow-inner" />
 
                             <label className="text-gray-700 font-medium">Chef Name</label>
-                            <input type="text" name="chefName" required
+                            <input type="text" {...register('chefName')} required
                                 placeholder="Chef name" className="w-full px-3 py-2 rounded-xl bg-gray-50 shadow-inner" />
 
                             <label className="text-gray-700 font-medium">Price</label>
-                            <input type="number" name="price" required
+                            <input type="number" {...register('price')} required
                                 placeholder="350" className="w-full px-3 py-2 rounded-xl bg-gray-50 shadow-inner" />
                         </div>
                     </div>
 
                     <label className="text-gray-700 font-medium">Rating</label>
-                    <input type="number" name="rating" step="0.1" min="0" max="5" required
+                    <input type="number" {...register('rating')} step="0.1" min="0" max="5" required
                         placeholder="4.5" className="w-full px-3 py-2 rounded-xl bg-gray-50 shadow-inner" />
 
                     <label className="text-gray-700 font-medium">Ingredients</label>
-                    <input type="text" name="ingredients" required
+                    <input type="text" {...register('ingredients')} required
                         placeholder="Salt, Pepper, Chicken, Onion" className="w-full px-3 py-2 rounded-xl bg-gray-50 shadow-inner" />
 
                     <label className="text-gray-700 font-medium">Delivery Area</label>
-                    <input type="text" name="deliveryArea" required
+                    <input type="text" {...register('deliveryArea')} required
                         placeholder="Bogura" className="w-full px-3 py-2 rounded-xl bg-gray-50 shadow-inner" />
 
                     <label className="text-gray-700 font-medium">Estimated Delivery Time</label>
-                    <input type="text" name="deliveryTime" required
+                    <input type="text" {...register('deliveryTime')} required
                         placeholder="20 min" className="w-full px-3 py-2 rounded-xl bg-gray-50 shadow-inner" />
 
                     <label className="text-gray-700 font-medium">Chef’s Experience</label>
-                    <input type="text" name="experience" required
+                    <input type="text" {...register('experience')} required
                         placeholder="10 years" className="w-full px-3 py-2 rounded-xl bg-gray-50 shadow-inner" />
 
                     <label className="text-gray-700 font-medium">Chef ID</label>
-                    <input type="text" name="chefId" required
+                    <input type="text" {...register('chefId')} required
                         placeholder="CHEF1056" className="w-full px-3 py-2 rounded-xl bg-gray-50 shadow-inner" />
 
                     <label className="text-gray-700 font-medium">User Email</label>
-                    <input type="text" name="email" value={user.email} className="w-full px-3 py-2 rounded-xl bg-gray-50 shadow-inner" />
+                    <input type="text" {...register('email')} value={user.email} className="w-full px-3 py-2 rounded-xl bg-gray-50 shadow-inner" />
 
                     <button type="submit"
                         disabled={person.status === "fraud"}

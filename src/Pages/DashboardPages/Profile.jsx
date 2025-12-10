@@ -76,6 +76,7 @@ export default function Profile() {
 
     return (
         <div>
+             <title>Dashboard | Profile</title>
             {
                 isloading ? <Spinner></Spinner> :
                     <div className="pt-6 flex flex-col justify-center items-center bg-white h-screen">

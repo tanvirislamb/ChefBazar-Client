@@ -3,11 +3,13 @@ import { useEffect } from "react";
 import { useLocation } from "react-router";
 import useAxios from "../Hooks/AxiosHooks";
 import Swal from "sweetalert2";
+import { useForm } from "react-hook-form";
 
 
 export default function UpdateModal({ isOpen, onClose, review, refetch }) {
     const axios = useAxios()
     const location = useLocation();
+    const { register, handleSubmit } = useForm()
 
     useEffect(() => {
         if (isOpen) {
@@ -17,12 +19,10 @@ export default function UpdateModal({ isOpen, onClose, review, refetch }) {
 
     if (!isOpen) return null;
 
-    const updateHandle = e => {
-        e.preventDefault()
+    const updateHandle = (data) => {
 
-        const form = e.target
-        const comment = form.comment.value
-        const rating = form.rating.value
+        const comment = data.comment
+        const rating = data.rating
 
         axios.patch(`/myreview/update/${review._id}`, {
             comment: comment, rating: rating
@@ -57,9 +57,9 @@ export default function UpdateModal({ isOpen, onClose, review, refetch }) {
                         <RxCross2 />
                     </button>
                 </div>
-                <form onSubmit={updateHandle} className="space-y-4">
-                    <input type="text" name="comment" defaultValue={review.comment} className="w-full px-3 py-2 bg-gray-50 shadow-inner rounded-2xl" />
-                    <input type="text" name="rating" defaultValue={review.rating} className="w-full px-3 py-2 bg-gray-50 shadow-inner rounded-2xl" />
+                <form onSubmit={handleSubmit(updateHandle)} className="space-y-4">
+                    <input type="text" {...register('comment')} defaultValue={review.comment} className="w-full px-3 py-2 bg-gray-50 shadow-inner rounded-2xl" />
+                    <input type="text" {...register('rating')} defaultValue={review.rating} className="w-full px-3 py-2 bg-gray-50 shadow-inner rounded-2xl" />
                     <button type="submit" className="text-center text-white font-semibold cursor-pointer w-full py-2 rounded-2xl bg-orange-500">Update Review</button>
                 </form>
             </div>

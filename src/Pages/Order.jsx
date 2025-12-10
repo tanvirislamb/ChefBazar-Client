@@ -69,6 +69,7 @@ export default function Order() {
 
     return (
         <div className="bg-gray-50 h-screen">
+            <title>ChefBazar | Order Food</title>
             <div className="p-5 max-w-lg mx-auto">
                 <h1 className="text-3xl font-bold mb-5 text-orange-500">Order Your Meal</h1>
                 <form onSubmit={handleConfirmOrder} className="space-y-4 bg-white p-5 rounded-xl shadow-md">

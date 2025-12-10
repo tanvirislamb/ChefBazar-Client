@@ -33,10 +33,7 @@ export default function Dashboard() {
 
     return (
         <div className="flex">
-            {/* Toggle Checkbox */}
             <input type="checkbox" id="drawer-toggle" className="hidden peer" />
-
-            {/* Overlay (click to close) */}
             <label
                 htmlFor="drawer-toggle"
                 className="
@@ -44,8 +41,6 @@ export default function Dashboard() {
                     peer-checked:block lg:hidden
                 "
             ></label>
-
-            {/* Sidebar */}
             <aside
                 className="
                     fixed left-0 top-0 z-40 h-full bg-white shadow-md

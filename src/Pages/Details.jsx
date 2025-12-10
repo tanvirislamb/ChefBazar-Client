@@ -99,6 +99,7 @@ export default function Details() {
 
     return (
         <div>
+            <title>ChefBazar | Food Details</title>
             {
                 loading ?
                     <div className="h-[90vh] flex justify-center items-center">

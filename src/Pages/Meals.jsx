@@ -31,6 +31,7 @@ export default function Meals() {
 
     return (
         <div className="m-5">
+            <title>ChefBazar | Meals</title>
             <h1 className="text-center font-bold text-2xl md:text-3xl w-full py-4 bg-gray-100 rounded-2xl border-x-3 border-orange-500 drop-shadow-md my-5">Explore Our All Meals</h1>
             <div className="w-full flex justify-between items-center border-b-2 border-orange-500 mt-10 pb-3">
                 <h3 className="text-xl font-bold">Meals Found {meals.length}</h3>

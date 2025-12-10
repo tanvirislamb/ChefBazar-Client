@@ -17,6 +17,7 @@ export default function Home() {
     })
     return (
         <div>
+            <title>ChefBazar | Home</title>
             <Banner />
             <div className="mt-5 mx-4">
                 <h1 className="text-center font-bold text-2xl md:text-3xl w-full py-4 bg-gray-100 rounded-2xl border-b-3 border-orange-500 drop-shadow-md">Our Latest Meals</h1>

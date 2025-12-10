@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import useAxios from "../Hooks/AxiosHooks";
 import { AuthContext } from "../Provider/AuthProvider";
+import { useForm } from "react-hook-form";
 
 
 export default function Register() {
@@ -15,19 +16,19 @@ export default function Register() {
     const [confirm, setConfirm] = useState("");
     const [error, setError] = useState("");
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const { register, handleSubmit } = useForm()
+
+    const handleRegister = (data) => {
 
         if (password !== confirm) {
             setError("Passwords do not match!");
             return;
         }
         setError("");
-        const form = e.target
-        const name = form.name.value
-        const email = form.email.value
-        const image = form.image.value
-        const address = form.address.value
+        const name = data.name
+        const email = data.email
+        const image = data.image
+        const address = data.address
 
 
         registerFuction(email, password)
@@ -57,21 +58,23 @@ export default function Register() {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 px-6">
+            <title>ChefBazar | Register</title>
             <div className="w-full max-w-md bg-white shadow-lg rounded-xl p-8">
 
                 <h2 className="text-3xl font-bold text-center mb-6">
                     Create an <span className="text-orange-500">Account</span>
                 </h2>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit(handleRegister)} className="space-y-4">
 
                     {/* Name */}
                     <div>
                         <label className="text-gray-700 font-medium">Name</label>
                         <input
                             type="text"
-                            name="name"
-                            className="w-full mt-1 px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-orange-500"
+                            {...register('name')}
+                            placeholder="Your Name"
+                            className="w-full mt-1 px-4 py-2 bg-gray-100 shadow-inner rounded-lg outline-none focus:ring-2 focus:ring-orange-500"
                             required
                         />
                     </div>
@@ -81,8 +84,9 @@ export default function Register() {
                         <label className="text-gray-700 font-medium">Email</label>
                         <input
                             type="email"
-                            name="email"
-                            className="w-full mt-1 px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-orange-500"
+                            {...register('email')}
+                            placeholder="Email"
+                            className="w-full mt-1 px-4 py-2 bg-gray-100 shadow-inner rounded-lg outline-none focus:ring-2 focus:ring-orange-500"
                             required
                         />
                     </div>
@@ -94,8 +98,8 @@ export default function Register() {
                         </label>
                         <input
                             type="text"
-                            name="image"
-                            className="w-full mt-1 px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-orange-500"
+                            {...register('image')}
+                            className="w-full mt-1 px-4 py-2 bg-gray-100 shadow-inner rounded-lg outline-none focus:ring-2 focus:ring-orange-500"
                             placeholder="https://example.com/me.png"
                             required
                         />
@@ -106,8 +110,9 @@ export default function Register() {
                         <label className="text-gray-700 font-medium">Address</label>
                         <input
                             type="text"
-                            name="address"
-                            className="w-full mt-1 px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-orange-500"
+                            {...register('address')}
+                            placeholder="Address"
+                            className="w-full mt-1 px-4 py-2 bg-gray-100 shadow-inner rounded-lg outline-none focus:ring-2 focus:ring-orange-500"
                             required
                         />
                     </div>
@@ -117,7 +122,7 @@ export default function Register() {
                         <label className="text-gray-700 font-medium">Password</label>
                         <input
                             type="password"
-                            className="w-full mt-1 px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-orange-500"
+                            className="w-full mt-1 px-4 py-2 bg-gray-100 shadow-inner rounded-lg outline-none focus:ring-2 focus:ring-orange-500"
                             required
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
@@ -129,7 +134,7 @@ export default function Register() {
                         <label className="text-gray-700 font-medium">Confirm Password</label>
                         <input
                             type="password"
-                            className={`w-full mt-1 px-4 py-2 border rounded-lg outline-none focus:ring-2 ${error ? "border-red-500 focus:ring-red-500" : "focus:ring-orange-500"
+                            className={`w-full mt-1 px-4 py-2 bg-gray-100 shadow-inner rounded-lg outline-none focus:ring-2 ${error ? "border-red-500 focus:ring-red-500" : "focus:ring-orange-500"
                                 }`}
                             required
                             value={confirm}

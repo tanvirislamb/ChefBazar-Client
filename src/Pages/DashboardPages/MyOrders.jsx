@@ -21,6 +21,7 @@ export default function MyOrders() {
 
     return (
         <div className="mx-5 py-5">
+             <title>Dashboard | My Orders</title>
             <h1 className="text-center font-bold text-3xl w-full py-4 bg-gray-100 rounded-2xl border-x-3 border-orange-500 drop-shadow-md">My Orders</h1>
             <div>
                 {

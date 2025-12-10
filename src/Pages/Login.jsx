@@ -31,6 +31,7 @@ export default function Login() {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 px-6">
+            <title>ChefBazar | Login</title>
             <div className="w-full max-w-md bg-white shadow-lg rounded-xl p-8">
 
                 <h2 className="text-3xl font-bold text-center mb-6">
@@ -45,7 +46,8 @@ export default function Login() {
                         <input
                             type="email"
                             name="email"
-                            className="w-full mt-1 px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-orange-500"
+                            placeholder="Email"
+                            className="w-full mt-1 px-4 py-2 bg-gray-100 shadow-inner rounded-lg outline-none focus:ring-2 focus:ring-orange-500"
                             required
                         />
                     </div>
@@ -56,7 +58,8 @@ export default function Login() {
                         <input
                             type="password"
                             value={password}
-                            className={`w-full mt-1 px-4 py-2 border rounded-lg outline-none focus:ring-2 ${error ? "border-red-500 focus:ring-red-500" : "focus:ring-orange-500"
+                            placeholder="Password"
+                            className={`w-full mt-1 px-4 py-2 bg-gray-100 shadow-inner rounded-lg outline-none focus:ring-2 ${error ? "border-red-500 focus:ring-red-500" : "focus:ring-orange-500"
                                 }`}
                             onChange={(e) => setPassword(e.target.value)}
                             required

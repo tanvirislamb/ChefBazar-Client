@@ -9,15 +9,21 @@ export default function Meals() {
 
     const axios = useAxios()
     const [sortOrder, setSortOrder] = useState('')
+    const [page, setPage] = useState(1)
+    const limit = 10
 
-    const { data: meals = [], isLoading } = useQuery({
-        queryKey: ['meals'],
+    const { data, isLoading } = useQuery({
+        queryKey: ['meals', page, limit],
         queryFn: async () => {
-            const res = await axios.get('/meals')
+            const res = await axios.get(`/meals?page=${page}&limit=${limit}`)
             return res.data
         },
         staleTime: 1000 * 60
     })
+
+    const meals = data?.meals || []     // array
+    const total = data?.total || 0
+    const totalPages = Math.ceil(total / limit)
 
     const sortedMeals = useMemo(() => {
         if (sortOrder === 'low') {
@@ -79,6 +85,25 @@ export default function Meals() {
                             }
                         </div>
                 }
+            </div>
+            <div className="flex justify-center items-center gap-3 mt-10">
+                <button
+                    disabled={page === 1}
+                    onClick={() => setPage(prev => prev - 1)}
+                    className="px-4 py-2 bg-orange-500 disabled:bg-gray-300 text-white rounded-xl"
+                >
+                    Prev
+                </button>
+
+                <p className="font-bold text-lg">{page} / {totalPages}</p>
+
+                <button
+                    disabled={page === totalPages}
+                    onClick={() => setPage(prev => prev + 1)}
+                    className="px-4 py-2 bg-orange-500 disabled:bg-gray-300 text-white rounded-xl"
+                >
+                    Next
+                </button>
             </div>
         </div>
     )

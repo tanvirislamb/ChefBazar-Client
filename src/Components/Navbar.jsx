@@ -21,7 +21,7 @@ export default function Navbar() {
                 <NavLink to='/meals'
                     className={({ isActive }) => `${isActive ? 'font-bold bg-orange-500 text-white shadow-md rounded-2xl px-3 py-1' : ''}`}>Meals</NavLink>
                 {
-                    user && <NavLink to='/dashboard'
+                    user && <NavLink to='/dashboard/profile'
                         className={({ isActive }) => `${isActive ? 'font-bold bg-orange-500 text-white shadow-md rounded-2xl px-3 py-1' : ''}`}>Dashboard</NavLink>
                 }
             </div>

@@ -3,6 +3,7 @@ import { AuthContext } from "../../Provider/AuthProvider"
 import useAxios from "../../Hooks/AxiosHooks"
 import { FiClock, FiDollarSign, FiHash, FiPackage, FiUser } from "react-icons/fi"
 import { timeAgo } from "../../Components/TimeAgo"
+import { Link } from "react-router"
 
 export default function MyOrders() {
 
@@ -84,13 +85,26 @@ export default function MyOrders() {
                                                         order.orderStatus === "Pending" ?
                                                             <span className="px-3 py-1 rounded-lg shadow-sm bg-orange-200 text-gray-800 capitalize">
                                                                 {order.paymentStatus}
-                                                            </span> :
-                                                            <button
-                                                                disabled={order.orderStatus === "Cancelled"}
-                                                                className={`px-3 py-1 rounded-2xl shadow-sm  text-white capitalize
+                                                            </span> : (
+                                                                <span>
+                                                                    {
+                                                                        order.paymentStatus === "paid" ?
+                                                                            <button
+                                                                                className={`px-3 py-1 rounded-2xl shadow-sm  text-white capitalize
+                                                                                bg-green-500`}>
+                                                                                Paid
+                                                                            </button>
+                                                                            :
+                                                                            <Link to={`/dashboard/payment/${order._id}`}
+                                                                                disabled={order.orderStatus === "Cancelled"}
+                                                                                className={`px-3 py-1 rounded-2xl shadow-sm  text-white capitalize
                                                             ${order.orderStatus === "Cancelled" ? "bg-gray-200 cursor-not-allowed" : "bg-orange-500 cursor-pointer"}`}>
-                                                                Pay
-                                                            </button>
+                                                                                Pay
+                                                                            </Link>
+                                                                    }
+                                                                </span>
+                                                            )
+
                                                     }
                                                 </div>
                                             </div>

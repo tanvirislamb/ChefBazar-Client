@@ -19,6 +19,9 @@ import ManageUser from "../Pages/DashboardPages/ManageUser";
 import ManageReq from "../Pages/DashboardPages/ManageReq";
 import PlatformStat from "../Pages/DashboardPages/PlatformStat";
 import UpdateMeal from "../Pages/DashboardPages/UpdateMeal";
+import Payment from "../Pages/DashboardPages/Payment";
+import SuccessPage from "../Pages/DashboardPages/SuccesPage";
+import CancelPage from "../Pages/DashboardPages/CancelPage";
 
 const router = createBrowserRouter([
     {
@@ -60,47 +63,59 @@ const router = createBrowserRouter([
                 Component: Profile
             },
             {
-                path: '/dashboard/profile',
+                path: 'profile',
                 Component: Profile
             },
             {
-                path: '/dashboard/myorders',
+                path: 'myorders',
                 Component: MyOrders
             },
             {
-                path: '/dashboard/myreviews',
+                path: 'payment/:id',
+                Component: Payment
+            },
+            {
+                path: 'payemnt-success',
+                Component: SuccessPage
+            },
+            {
+                path: 'payemnt-cancelled',
+                Component: CancelPage
+            },
+            {
+                path: 'myreviews',
                 Component: MyReviews
             },
             {
-                path: '/dashboard/myfavmeals',
+                path: 'myfavmeals',
                 Component: FavMeals
             },
             {
-                path: '/dashboard/createmeals',
+                path: 'createmeals',
                 Component: CreateMeals
             },
             {
-                path: '/dashboard/mymeals',
+                path: 'mymeals',
                 Component: MyMeals
             },
             {
-                path: '/dashboard/update',
+                path: 'update',
                 Component: UpdateMeal
             },
             {
-                path: '/dashboard/orderrequest',
+                path: 'orderrequest',
                 Component: OrderReq
             },
             {
-                path: '/dashboard/manageuser',
+                path: 'manageuser',
                 Component: ManageUser
             },
             {
-                path: '/dashboard/managerequest',
+                path: 'managerequest',
                 Component: ManageReq
             },
             {
-                path: '/dashboard/platformstatistics',
+                path: 'platformstatistics',
                 Component: PlatformStat
             }
         ]

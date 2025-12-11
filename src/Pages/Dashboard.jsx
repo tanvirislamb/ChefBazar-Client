@@ -13,6 +13,7 @@ import { FaPlateWheat } from "react-icons/fa6";
 import { BiEnvelope } from "react-icons/bi";
 import { LuUserRoundPen } from "react-icons/lu";
 import { FcStatistics } from "react-icons/fc";
+import Footer from "../Components/Footer";
 
 export default function Dashboard() {
     const closeDrawer = () => {
@@ -190,6 +191,7 @@ export default function Dashboard() {
                 <div className="w-full bg-white">
                     <div className="md:h-screen">
                         <Outlet />
+                        <Footer />
                     </div>
                 </div>
             </div>

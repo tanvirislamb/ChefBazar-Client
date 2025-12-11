@@ -22,11 +22,13 @@ import UpdateMeal from "../Pages/DashboardPages/UpdateMeal";
 import Payment from "../Pages/DashboardPages/Payment";
 import SuccessPage from "../Pages/DashboardPages/SuccesPage";
 import CancelPage from "../Pages/DashboardPages/CancelPage";
+import Error404 from "../Pages/Error404";
 
 const router = createBrowserRouter([
     {
         path: '/',
         Component: Root,
+        errorElement: <Error404 />,
         children: [
             {
                 path: '/',

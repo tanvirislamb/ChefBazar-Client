@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import Spinner from "../Loader/Spinner";
 import Loader from "../Loader/Loader";
+import Footer from "../Components/Footer";
 
 export default function Root() {
     const { loading } = useContext(AuthContext)
@@ -17,6 +18,7 @@ export default function Root() {
                     <div>
                         <Navbar></Navbar>
                         <Outlet></Outlet>
+                        <Footer></Footer>
                     </div>
             }
         </div>

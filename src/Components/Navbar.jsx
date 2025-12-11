@@ -29,8 +29,16 @@ export default function Navbar() {
                 {
                     user ?
                         (
-                            <div className="flex items-center gap-4">
-                                <img src={user.photoURL} alt="" className="w-7 md:w-9 h-7 md:h-9 rounded-full object-cover" />
+                            <div className="relative flex items-center gap-4">
+                                <div className="peer cursor-pointer">
+                                    <img src={user.photoURL} alt="" className="w-7 md:w-9 h-7 md:h-9 rounded-full object-cover" />
+                                </div>
+                                <div className="absolute right-full top-1/2 -translate-y-1/2 mr-3 
+                                              bg-gray-800 text-white text-sm rounded-md px-3 py-1 
+                                                opacity-0 peer-hover:opacity-100 
+                                                transition-opacity duration-200 whitespace-nowrap shadow-lg pointer-events-none">
+                                    {user.displayName}
+                                </div>
                                 <button
                                     onClick={logout}
                                     className="px-3 py-1 rounded-2xl bg-orange-500 text-xs md:text-base text-white font-semibold cursor-pointer">Log Out</button>

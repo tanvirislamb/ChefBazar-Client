@@ -13,7 +13,13 @@ export default function FavMeals() {
     const { data: favMeals = [], isLoading, refetch } = useQuery({
         queryKey: ["favMeals", user.uid],
         queryFn: async () => {
-            const res = await axios.get(`/meals/favourite/${user.uid}`)
+            const res = await axios.get(`/meals/favourite/${user.uid}`,
+                {
+                    headers: {
+                        authorization: `bearer ${user.accessToken}`
+                    }
+                }
+            )
             return res.data
         }
     })

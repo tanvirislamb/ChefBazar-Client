@@ -73,7 +73,7 @@ export default function OrderReq() {
                                                         <h2 className="text-xl font-bold text-gray-800">{order.foodName}</h2>
 
                                                         <div className="text-gray-700 space-y-2">
-                                                            <p><span className="font-semibold">Price:</span> ${order.price}</p>
+                                                            <p><span className="font-semibold">Price:</span> ৳{order.price}</p>
                                                             <p><span className="font-semibold">Quantity:</span> {order.quantity}</p>
                                                             <p>
                                                                 <span className="font-semibold">Status:</span>

@@ -21,7 +21,7 @@ export default function MyOrders() {
 
     return (
         <div className="mx-5 py-5">
-             <title>Dashboard | My Orders</title>
+            <title>Dashboard | My Orders</title>
             <h1 className="text-center font-bold text-3xl w-full py-4 bg-gray-100 rounded-2xl border-x-3 border-orange-500 drop-shadow-md">My Orders</h1>
             <div>
                 {
@@ -49,7 +49,7 @@ export default function MyOrders() {
                                                 <div className="flex items-center justify-between">
                                                     <span className="font-medium">Price:</span>
                                                     <span className="flex items-center gap-1 text-gray-900 font-semibold">
-                                                        <FiDollarSign className="text-orange-500" /> {order.price}
+                                                        ৳{order.price}
                                                     </span>
                                                 </div>
                                                 <div className="flex items-center justify-between">

@@ -23,6 +23,9 @@ import Payment from "../Pages/DashboardPages/Payment";
 import SuccessPage from "../Pages/DashboardPages/SuccesPage";
 import CancelPage from "../Pages/DashboardPages/CancelPage";
 import Error404 from "../Pages/Error404";
+import PrivateAdmin from "../Provider/PrivateAmin";
+import ForbiddenPage from "../Components/ForbiddenPage";
+import PrivateChef from "../Provider/PrivateChef";
 
 const router = createBrowserRouter([
     {
@@ -94,33 +97,37 @@ const router = createBrowserRouter([
             },
             {
                 path: 'createmeals',
-                Component: CreateMeals
+                element: <PrivateChef><CreateMeals></CreateMeals></PrivateChef>
             },
             {
                 path: 'mymeals',
-                Component: MyMeals
+                element: <PrivateChef><MyMeals></MyMeals></PrivateChef>
             },
             {
                 path: 'update',
-                Component: UpdateMeal
+                element: <PrivateChef><UpdateMeal></UpdateMeal></PrivateChef>
             },
             {
                 path: 'orderrequest',
-                Component: OrderReq
+                element: <PrivateChef><OrderReq></OrderReq></PrivateChef>
             },
             {
                 path: 'manageuser',
-                Component: ManageUser
+                element: <PrivateAdmin><ManageUser></ManageUser></PrivateAdmin>
             },
             {
                 path: 'managerequest',
-                Component: ManageReq
+                element: <PrivateAdmin><ManageReq></ManageReq></PrivateAdmin>
             },
             {
                 path: 'platformstatistics',
-                Component: PlatformStat
+                element: <PrivateAdmin><PlatformStat></PlatformStat></PrivateAdmin>
             }
         ]
+    },
+    {
+        path: '/forbidden',
+        Component: ForbiddenPage
     }
 ])
 

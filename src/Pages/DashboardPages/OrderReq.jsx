@@ -12,7 +12,13 @@ export default function OrderReq() {
     const { data: chef = [], isLoading: personLoading } = useQuery({
         queryKey: ['chef', user.uid],
         queryFn: async () => {
-            const res = await axios.get(`/user/${user.uid}`)
+            const res = await axios.get(`/user/${user.uid}`,
+                {
+                    headers: {
+                        authorization: `bearer ${user.accessToken}`
+                    }
+                }
+            )
             return res.data
         }
     })
@@ -48,7 +54,7 @@ export default function OrderReq() {
     }
 
     return (
-        <div className="mx-5 py-5">
+        <div className={`mx-5 py-5 ${orders.length < 3 ? "h-screen" : ""}`}>
             <title>Dashboard | Order Request</title>
             <h1 className="text-center font-bold text-3xl w-full py-4 bg-gray-100 rounded-2xl border-x-3 border-orange-500 drop-shadow-md">Order Request</h1>
             {

@@ -56,9 +56,7 @@ export default function Home() {
                 }
             </div>
             <CustomerReviewSlider />
-
-            {/* Extra Section */}
-            <div className="my-16 px-4">
+            <div className="py-16 px-4 bg-gray-50">
                 <h2 className="text-3xl font-bold text-center text-orange-500 mb-10">
                     Why Choose ChefBazar?
                 </h2>

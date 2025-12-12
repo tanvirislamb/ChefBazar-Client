@@ -15,7 +15,13 @@ export default function MyMeals() {
     const { data: meals = [], isLoading, refetch } = useQuery({
         queryKey: ["meals", user.uid],
         queryFn: async () => {
-            const res = await axios.get(`/chef/meals/${user.uid}`)
+            const res = await axios.get(`/chef/meals/${user.uid}`,
+                {
+                    headers: {
+                        authorization: `bearer ${user.accessToken}`
+                    }
+                }
+            )
             return res.data
         }
     })

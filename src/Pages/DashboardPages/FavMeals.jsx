@@ -49,7 +49,7 @@ export default function FavMeals() {
     }
 
     return (
-        <div className="mx-5 py-5 h-screen">
+        <div className={`mx-5 py-5 ${favMeals.length < 10 ? "h-screen" : ""}`}>
             <title>Dashboard | Favourite Meal</title>
             <h1 className="text-center font-bold text-3xl w-full py-4 bg-gray-100 rounded-2xl border-x-3 border-orange-500 drop-shadow-md">My Favourite Meals</h1>
             <div>

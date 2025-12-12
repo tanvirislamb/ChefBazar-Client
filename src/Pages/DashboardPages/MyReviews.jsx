@@ -17,7 +17,13 @@ export default function MyReviews() {
     const { data: reviews = [], isLoading, refetch } = useQuery({
         queryKey: ['reviews', user.uid],
         queryFn: async () => {
-            const res = await axios.get(`/myreview/${user.uid}`)
+            const res = await axios.get(`/myreview/${user.uid}`,
+                {
+                    headers: {
+                        authorization: `bearer ${user.accessToken}`
+                    }
+                }
+            )
             return res.data
         }
     })
@@ -47,7 +53,7 @@ export default function MyReviews() {
     }
 
     return (
-        <div className="mx-5 py-5">
+        <div className={`mx-5 py-5 ${reviews.length < 3 ? "h-screen" : ""}`}>
             <title>Dashboard | My Reviews</title>
             <h1 className="text-center font-bold text-3xl w-full py-4 bg-gray-100 rounded-2xl border-x-3 border-orange-500 drop-shadow-md">My Reviews</h1>
             <div>

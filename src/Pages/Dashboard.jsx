@@ -14,6 +14,7 @@ import { BiEnvelope } from "react-icons/bi";
 import { LuUserRoundPen } from "react-icons/lu";
 import { FcStatistics } from "react-icons/fc";
 import Footer from "../Components/Footer";
+import Loader from "../Loader/Loader";
 
 export default function Dashboard() {
     const closeDrawer = () => {
@@ -27,10 +28,20 @@ export default function Dashboard() {
     const { data: person = [], isloading } = useQuery({
         queryKey: ['person', user.uid],
         queryFn: async () => {
-            const res = await axios.get(`/user/${user.uid}`)
+            const res = await axios.get(`/user/${user.uid}`,
+                {
+                    headers: {
+                        authorization: `bearer ${user.accessToken}`
+                    }
+                }
+            )
             return res.data
         }
     })
+
+    if (isloading) {
+        return <Loader />
+    }
 
     return (
         <div className="flex">

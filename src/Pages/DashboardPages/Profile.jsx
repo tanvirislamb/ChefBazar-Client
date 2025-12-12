@@ -9,10 +9,16 @@ export default function Profile() {
     const { user } = useContext(AuthContext)
     const axios = useAxios()
 
-    const { data: person = [], isloading } = useQuery({
-        queryKey: ['person', user.uid],
+    const { data: loggedperson = [], isloading } = useQuery({
+        queryKey: ['loggedperson', user.uid],
         queryFn: async () => {
-            const res = await axios.get(`/user/${user.uid}`)
+            const res = await axios.get(`/user/${user.uid}`,
+                {
+                    headers: {
+                        authorization: `bearer ${user.accessToken}`
+                    }
+                }
+            )
             return res.data
         }
     })
@@ -21,7 +27,7 @@ export default function Profile() {
         const request = {
             photoURL: user.photoURL,
             userId: user.uid,
-            userName: person.name,
+            userName: loggedperson.name,
             userEmail: user.email,
             requestType: "chef",
             requestStatus: "pending",
@@ -49,7 +55,7 @@ export default function Profile() {
         const request = {
             photoURL: user.photoURL,
             userId: user.uid,
-            userName: person.name,
+            userName: loggedperson.name,
             userEmail: user.email,
             requestType: "admin",
             requestStatus: "pending",
@@ -76,7 +82,7 @@ export default function Profile() {
 
     return (
         <div>
-             <title>Dashboard | Profile</title>
+            <title>Dashboard | Profile</title>
             {
                 isloading ? <Spinner></Spinner> :
                     <div className="pt-6 flex flex-col justify-center items-center bg-white h-screen">
@@ -84,44 +90,44 @@ export default function Profile() {
                         <div className="md:shadow-md rounded-xl p-6 w-full md:w-[700px] md:border border-gray-100">
                             <div className="flex flex-col items-center gap-3">
                                 <img
-                                    src={person.photoURL}
+                                    src={loggedperson.photoURL}
                                     alt="User"
                                     className="w-28 h-28 rounded-full object-cover shadow"
                                 />
-                                <h2 className="text-xl font-semibold">{person.name}</h2>
-                                <p className="text-gray-500">{person.email}</p>
+                                <h2 className="text-xl font-semibold">{loggedperson.name}</h2>
+                                <p className="text-gray-500">{loggedperson.email}</p>
                             </div>
                             <div className="mt-6 space-y-4">
                                 <div className="flex justify-between">
                                     <span className="font-semibold">Address:</span>
-                                    <span>{person.address || "Not Provided"}</span>
+                                    <span>{loggedperson.address || "Not Provided"}</span>
                                 </div>
 
                                 <div className="flex justify-between">
                                     <span className="font-semibold">Role:</span>
-                                    <span className="capitalize">{person.role}</span>
+                                    <span className="capitalize">{loggedperson.role}</span>
                                 </div>
 
                                 <div className="flex justify-between">
                                     <span className="font-semibold">Status:</span>
-                                    <span className="capitalize">{person.status}</span>
+                                    <span className="capitalize">{loggedperson.status}</span>
                                 </div>
-                                {person.role === "chef" && (
+                                {loggedperson.role === "chef" && (
                                     <div className="flex justify-between">
                                         <span className="font-semibold">Chef ID:</span>
-                                        <span>{person.chefId}</span>
+                                        <span>{loggedperson.chefId}</span>
                                     </div>
                                 )}
                             </div>
                             <div className="mt-8 flex flex-col gap-3">
-                                {person.role !== "chef" && person.role !== "admin" && (
+                                {loggedperson.role !== "chef" && loggedperson.role !== "admin" && (
                                     <button onClick={handleBeChef}
                                         className="w-full py-2 rounded-md bg-orange-500 text-white font-semibold hover:bg-orange-600 cursor-pointer">
                                         Be a Chef
                                     </button>
                                 )}
 
-                                {person.role !== "admin" && (
+                                {loggedperson.role !== "admin" && (
                                     <button onClick={handleBeAdmin}
                                         className="w-full py-2 rounded-md border border-orange-500 text-orange-500 font-semibold hover:bg-orange-50">
                                         Be an Admin

@@ -84,7 +84,7 @@ export default function Profile() {
         <div>
             <title>Dashboard | Profile</title>
             {
-                isloading ? <Spinner></Spinner> :
+                isloading ? <div className="mt-10"><Spinner /></div> :
                     <div className="pt-6 flex flex-col justify-center items-center bg-white h-screen">
                         <h1 className="text-3xl font-bold text-orange-500 mb-6">My Profile</h1>
                         <div className="md:shadow-md rounded-xl p-6 w-full md:w-[700px] md:border border-gray-100">

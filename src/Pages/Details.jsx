@@ -13,17 +13,18 @@ export default function Details() {
     const { id } = useParams()
     const axios = useAxios()
     const { user } = useContext(AuthContext)
-    const [loading, setLoading] = useState(true)
+    const [dataloading, setDataloading] = useState(false)
     const [data, setData] = useState([])
     const [reviews, setReviews] = useState([])
     const [rating, setRating] = useState([])
 
     useEffect(() => {
+        setDataloading(true)
         axios.get(`/details/${id}`)
             .then((res) => {
                 setData(res.data)
+                setDataloading(false)
             })
-        setLoading(false)
     }, [id])
     useEffect(() => {
         axios.get(`/review/${id}`)
@@ -32,7 +33,7 @@ export default function Details() {
             })
     }, [id])
 
-    const { data: person = [], isloading } = useQuery({
+    const { data: person = [], isloading: personloading } = useQuery({
         queryKey: ['person', user.uid],
         queryFn: async () => {
             const res = await axios.get(`/user/${user.uid}`)
@@ -96,6 +97,8 @@ export default function Details() {
                 });
             })
     }
+
+    const loading = personloading || dataloading
 
     return (
         <div>

@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router";
 import useAxios from "../Hooks/AxiosHooks";
 import { AuthContext } from "../Provider/AuthProvider";
 import { useForm } from "react-hook-form";
+import { IoEye, IoEyeOff } from "react-icons/io5";
 
 
 export default function Register() {
@@ -15,6 +16,8 @@ export default function Register() {
     const [password, setPassword] = useState("");
     const [confirm, setConfirm] = useState("");
     const [error, setError] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const togglePassword = () => setShowPassword(!showPassword);
 
     const { register, handleSubmit } = useForm()
 
@@ -120,26 +123,52 @@ export default function Register() {
                     {/* Password */}
                     <div>
                         <label className="text-gray-700 font-medium">Password</label>
-                        <input
-                            type="password"
-                            className="w-full mt-1 px-4 py-2 bg-gray-100 shadow-inner rounded-lg outline-none focus:ring-2 focus:ring-orange-500"
-                            required
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
+                        <div className="relative">
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                className="w-full mt-1 px-4 py-2 bg-gray-100 shadow-inner rounded-lg outline-none focus:ring-2 focus:ring-orange-500"
+                                required
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                            <button
+                                type="button"
+                                onClick={togglePassword}
+                                className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-blue-600"
+                            >
+                                {showPassword ? (
+                                    <IoEyeOff className="text-xl" />
+                                ) : (
+                                    <IoEye className="text-xl" />
+                                )}
+                            </button>
+                        </div>
                     </div>
 
                     {/* Confirm Password */}
                     <div>
                         <label className="text-gray-700 font-medium">Confirm Password</label>
-                        <input
-                            type="password"
-                            className={`w-full mt-1 px-4 py-2 bg-gray-100 shadow-inner rounded-lg outline-none focus:ring-2 ${error ? "border-red-500 focus:ring-red-500" : "focus:ring-orange-500"
-                                }`}
-                            required
-                            value={confirm}
-                            onChange={(e) => setConfirm(e.target.value)}
-                        />
+                        <div className="relative">
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                className={`w-full mt-1 px-4 py-2 bg-gray-100 shadow-inner rounded-lg outline-none focus:ring-2 ${error ? "border-red-500 focus:ring-red-500" : "focus:ring-orange-500"
+                                    }`}
+                                required
+                                value={confirm}
+                                onChange={(e) => setConfirm(e.target.value)}
+                            />
+                            <button
+                                type="button"
+                                onClick={togglePassword}
+                                className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-blue-600"
+                            >
+                                {showPassword ? (
+                                    <IoEyeOff className="text-xl" />
+                                ) : (
+                                    <IoEye className="text-xl" />
+                                )}
+                            </button>
+                        </div>
                     </div>
 
                     {/* Error Message */}

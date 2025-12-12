@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../Provider/AuthProvider";
+import { IoEye, IoEyeOff } from "react-icons/io5";
 
 export default function Login() {
 
@@ -10,6 +11,8 @@ export default function Login() {
 
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const togglePassword = () => setShowPassword(!showPassword);
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -55,15 +58,28 @@ export default function Login() {
                     {/* Password */}
                     <div>
                         <label className="text-gray-700 font-medium">Password</label>
-                        <input
-                            type="password"
-                            value={password}
-                            placeholder="Password"
-                            className={`w-full mt-1 px-4 py-2 bg-gray-100 shadow-inner rounded-lg outline-none focus:ring-2 ${error ? "border-red-500 focus:ring-red-500" : "focus:ring-orange-500"
-                                }`}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
+                        <div className="relative">
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                value={password}
+                                placeholder="Password"
+                                className={`w-full mt-1 px-4 py-2 bg-gray-100 shadow-inner rounded-lg outline-none focus:ring-2 ${error ? "border-red-500 focus:ring-red-500" : "focus:ring-orange-500"
+                                    }`}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                            <button
+                                type="button"
+                                onClick={togglePassword}
+                                className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-blue-600"
+                            >
+                                {showPassword ? (
+                                    <IoEyeOff className="text-xl" />
+                                ) : (
+                                    <IoEye className="text-xl" />
+                                )}
+                            </button>
+                        </div>
                     </div>
 
                     {/* Error */}

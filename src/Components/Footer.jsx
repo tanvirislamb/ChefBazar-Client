@@ -1,9 +1,11 @@
 // Footer.jsx
-import React from "react";
+import React, { useContext } from "react";
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { Link } from "react-router";
+import { AuthContext } from "../Provider/AuthProvider";
 
 export default function Footer() {
+    const { user } = useContext(AuthContext)
     return (
         <footer className="bg-gray-900 text-white py-12">
             <div className="max-w-[1200px] mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -27,7 +29,9 @@ export default function Footer() {
                     <h3 className="text-lg font-bold mb-4 text-orange-500">Quick Links</h3>
                     <Link to='/' className="text-gray-300 hover:text-orange-500 mb-2">Home</Link>
                     <Link to='/meals' className="text-gray-300 hover:text-orange-500 mb-2">Meals</Link>
-                    <Link to='/dashboard' className="text-gray-300 hover:text-orange-500 mb-2">Dashboard</Link>
+                    {
+                        user && <Link to='/dashboard' className="text-gray-300 hover:text-orange-500 mb-2">Dashboard</Link>
+                    }
                 </div>
 
                 {/* Contact Info */}

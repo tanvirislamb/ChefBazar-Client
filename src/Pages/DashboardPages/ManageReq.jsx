@@ -30,7 +30,7 @@ export default function ManageReq() {
         if (person.requestType === "admin") {
             axios.patch(`/user/role/${person.userId}`, { role: person.requestType })
                 .then(() => {
-                    axios.patch(`/request/status/${person.userId}`, { requestStatus: "approved" })
+                    axios.patch(`/request/status/${person._id}`, { requestStatus: "approved" })
                         .then(() => {
                             Swal.fire({
                                 title: "Admin!",
@@ -44,7 +44,7 @@ export default function ManageReq() {
             axios.patch(`/user/role/chef/${person.userId}`,
                 { role: person.requestType, chefId: generateChefId() })
                 .then(() => {
-                    axios.patch(`/request/status/${person.userId}`, { requestStatus: "approved" })
+                    axios.patch(`/request/status/${person._id}`, { requestStatus: "approved" })
                         .then(() => {
                             Swal.fire({
                                 title: "Chef!",
